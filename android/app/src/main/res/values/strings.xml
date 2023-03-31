@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ScanbotBarcodeScannerExampleCapacitor</string>
+    <string name="title_activity_main">ScanbotBarcodeScannerExampleCapacitor</string>
+    <string name="package_name">io.scanbot.example.sdk.barcode.capacitor</string>
+    <string name="custom_url_scheme">io.scanbot.example.sdk.barcode.capacitor</string>
+</resources>
