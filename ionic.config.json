@@ -1,7 +1,0 @@
-{
-  "name": "ScanbotBarcodeScannerExampleCapacitor",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
