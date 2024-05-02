@@ -1,5 +1,5 @@
 {
-  "name": "ScanbotBarcodeScannerExampleCapacitor",
+  "name": "Capacitor Scanbot Barcode Scanner SDK Example",
   "integrations": {
     "capacitor": {}
   },
