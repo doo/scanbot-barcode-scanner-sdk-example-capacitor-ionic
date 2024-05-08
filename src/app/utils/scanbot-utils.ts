@@ -222,12 +222,15 @@ export class ScanbotUtils {
   }
 
   async getAcceptedBarcodeDocumentFormats(): Promise<BarcodeDocumentFormat[]> {
-    const filterIsDisabled =
-      !(await this.isBarcodeDocumentFormatsFilterEnabled());
+    const filterIsEnabled = await this.isBarcodeDocumentFormatsFilterEnabled();
 
-    return (await this.getBarcodeDocumentSettings())
-      .filter((x) => x.accepted || filterIsDisabled)
-      .map((x) => x.format);
+    if (filterIsEnabled) {
+      return (await this.getBarcodeDocumentSettings())
+        .filter((x) => x.accepted)
+        .map((x) => x.format);
+    } else {
+      return [];
+    }
   }
 
   // Default is undefined (true). Only if explicitly is set to false, then it will be disabled.
