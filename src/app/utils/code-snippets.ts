@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 
 import { ScanbotBarcodeSDK, ScanbotBarcodeSdkConfiguration } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
-import { startBarcodeScanner, BarcodeScannerConfiguration, SingleScanningMode, MultipleScanningMode, BarcodeMappedData, BarcodeItem } from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2'
+import { startBarcodeScanner, BarcodeScannerConfiguration, SingleScanningMode, MultipleScanningMode, BarcodeMappedData } from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2'
 
 async function initScanbotBarcodeScannerSdkWithLogging() {
     const config: ScanbotBarcodeSdkConfiguration = {
@@ -93,6 +93,23 @@ function rtuUiV2PaletteConfiguration() {
     config.palette.sbColorSurfaceLow = '#00000026';
     config.palette.sbColorSurfaceHigh = '#0000007A';
     config.palette.sbColorModalOverlay = '#000000A3';
+}
+
+async function statRtuUiV2WithUserGuidanceConfiguration() {
+    // Create the default configuration object.
+    const config = new BarcodeScannerConfiguration();
+
+    // Hide/unhide the user guidance.
+    config.userGuidance.visible = true;
+
+    // Configure the title.
+    config.userGuidance.title.text = 'Move the finder over a barcode';
+    config.userGuidance.title.color = '#FFFFFF';
+
+    // Configure the background.
+    config.userGuidance.background.fillColor = '#0000007A';
+
+    // Configure other parameters as needed.
 }
 
 function rtuUiV2TopBarConfiguration() {
