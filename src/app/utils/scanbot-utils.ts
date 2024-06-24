@@ -12,12 +12,16 @@ export interface Feature {
 }
 
 export enum FeatureId {
-  ScanBarcodes,
-  ScanBatchBarcodes,
+  RtuSingleScanning,
+  RtuMultiScanning,
+  RtuMultiArScanning,
+  RtuFindAndPickScanning,
   DetectBarcodesOnImage,
   ExtractImagesFromPdf,
   LicenseInfo,
   StorageCleanup,
+  LegacyScanBarcodes,
+  LegacyScanBatchBarcodes,
 }
 
 export interface BarcodeSetting {
@@ -94,12 +98,12 @@ export class ScanbotUtils {
         accepted: await this.isBarcodeFormatAccepted('MICRO_QR_CODE'),
       },
       {
-        format: 'RSS_14',
-        accepted: await this.isBarcodeFormatAccepted('RSS_14'),
+        format: 'DATABAR',
+        accepted: await this.isBarcodeFormatAccepted('DATABAR'),
       },
       {
-        format: 'RSS_EXPANDED',
-        accepted: await this.isBarcodeFormatAccepted('RSS_EXPANDED'),
+        format: 'DATABAR_EXPANDED',
+        accepted: await this.isBarcodeFormatAccepted('DATABAR_EXPANDED'),
       },
       {
         format: 'UPC_A',

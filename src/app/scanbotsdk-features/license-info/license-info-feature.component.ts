@@ -31,9 +31,7 @@ export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
         `<br />• Expiration Date:
           ${
             result.data?.licenseExpirationDate
-              ? new Date(
-                  Number(result.data?.licenseExpirationDate)
-                ).toDateString()
+              ? new Date(result.data?.licenseExpirationDate).toDateString()
               : 'N/A'
           }` +
         `<br />• Status: ${result.data?.licenseStatus}`;

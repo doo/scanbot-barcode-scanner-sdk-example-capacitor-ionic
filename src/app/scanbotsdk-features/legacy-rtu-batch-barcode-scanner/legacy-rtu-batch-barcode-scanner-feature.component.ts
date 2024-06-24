@@ -7,24 +7,24 @@ import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
 
 import {
-  BarcodeScannerConfiguration,
+  BatchBarcodeScannerConfiguration,
   ScanbotBarcodeSDK,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
-  selector: 'app-rtu-barcode-scanner-feature',
+  selector: 'app-legacy-rtu-batch-barcode-scanner-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
   standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
-export class RtuBarcodeScannerFeatureComponent extends ScanbotSdkFeatureComponent {
+export class LegacyRtuBatchBarcodeScannerFeatureComponent extends ScanbotSdkFeatureComponent {
   private scanbotUtils = inject(ScanbotUtils);
   private router = inject(Router);
 
   override feature = {
-    id: FeatureId.ScanBarcodes,
-    title: 'Scan QR-/Barcode',
+    id: FeatureId.LegacyScanBarcodes,
+    title: 'Scan Multiple QR-/Barcodes',
   };
 
   override async featureClicked() {
@@ -33,10 +33,9 @@ export class RtuBarcodeScannerFeatureComponent extends ScanbotSdkFeatureComponen
       return;
     }
 
-    const configuration: BarcodeScannerConfiguration = {
+    const configuration: BatchBarcodeScannerConfiguration = {
       // Customize colors, text resources, behavior, etc..
-      finderTextHint:
-        'Please align the barcode or QR code in the frame above to scan it.',
+      finderTextHint: 'Please align the code in the frame above to scan it.',
       orientationLockMode: 'PORTRAIT',
       finderLineColor: '#ffffff',
       barcodeFormats: await this.scanbotUtils.getAcceptedBarcodeFormats(), // optional filter for specific barcode types
@@ -48,18 +47,20 @@ export class RtuBarcodeScannerFeatureComponent extends ScanbotSdkFeatureComponen
     };
 
     try {
-      const result = await ScanbotBarcodeSDK.startBarcodeScanner(configuration);
+      const result = await ScanbotBarcodeSDK.startBatchBarcodeScanner(
+        configuration
+      );
 
       if (result.status === 'CANCELED') {
         // User has canceled the scanning operation
-      } else if (result.data?.barcodes && result.data.barcodes.length > 0) {
-        // Handle the scanned barcode from result
+      } else if (result.data?.barcodes && result.data?.barcodes.length > 0) {
+        // Handle the scanned barcode(s) from result
         await this.router.navigate([
-          '/barcode-results',
+          '/legacy-barcode-results',
           JSON.stringify(result.data.barcodes),
         ]);
       } else {
-        await this.utils.showInfoAlert('No barcode scanned');
+        await this.utils.showInfoAlert('No barcodes scanned');
       }
     } catch (error: any) {
       await this.utils.showErrorAlert(error);

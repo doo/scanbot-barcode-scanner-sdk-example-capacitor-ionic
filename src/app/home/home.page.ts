@@ -13,12 +13,16 @@ import { Router } from '@angular/router';
 
 import { CommonUtils } from '../utils/common-utils';
 
-import { RtuBarcodeScannerFeatureComponent } from '../scanbotsdk-features/rtu-barcode-scanner/rtu-barcode-scanner-feature.component';
-import { RtuBatchBarcodeScannerFeatureComponent } from '../scanbotsdk-features/rtu-batch-barcode-scanner/rtu-batch-barcode-scanner-feature.component';
+import { RtuSingleScanningFeatureComponent } from '../scanbotsdk-features/rtu-single-scanning/rtu-single-scanning-feature.component';
+import { RtuMultiScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-scanning/rtu-multi-scanning-feature.component';
+import { RtuMultiArScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-ar-scanning/rtu-multi-ar-scanning-feature.component';
+import { RtuFindAndPickScanningFeatureComponent } from '../scanbotsdk-features/rtu-find-and-pick-scanning/rtu-find-and-pick-scanning-feature.component';
 import { DetectBarcodesOnImageFeatureComponent } from '../scanbotsdk-features/detect-barcodes-on-image/detect-barcodes-on-image-feature.component';
 import { ExtractImagesFromPdfFeatureComponent } from '../scanbotsdk-features/extract-images-from-pdf/extract-images-from-pdf-feature.component';
 import { LicenseInfoFeatureComponent } from '../scanbotsdk-features/license-info/license-info-feature.component';
 import { StorageCleanupFeatureComponent } from '../scanbotsdk-features/storage-cleanup/storage-cleanup-feature.component';
+import { LegacyRtuBarcodeScannerFeatureComponent } from '../scanbotsdk-features/legacy-rtu-barcode-scanner/legacy-rtu-barcode-scanner-feature.component';
+import { LegacyRtuBatchBarcodeScannerFeatureComponent } from '../scanbotsdk-features/legacy-rtu-batch-barcode-scanner/legacy-rtu-batch-barcode-scanner-feature.component';
 
 import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
@@ -36,12 +40,16 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
     IonList,
     IonItem,
     IonLabel,
-    RtuBarcodeScannerFeatureComponent,
-    RtuBatchBarcodeScannerFeatureComponent,
+    RtuSingleScanningFeatureComponent,
+    RtuMultiScanningFeatureComponent,
+    RtuMultiArScanningFeatureComponent,
+    RtuFindAndPickScanningFeatureComponent,
     DetectBarcodesOnImageFeatureComponent,
     ExtractImagesFromPdfFeatureComponent,
     LicenseInfoFeatureComponent,
     StorageCleanupFeatureComponent,
+    LegacyRtuBarcodeScannerFeatureComponent,
+    LegacyRtuBatchBarcodeScannerFeatureComponent,
   ],
 })
 export class HomePage {
