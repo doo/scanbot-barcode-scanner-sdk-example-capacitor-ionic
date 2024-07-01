@@ -19,6 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { CommonUtils } from 'src/app/utils/common-utils';
+import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
 
 import { BarcodeItem } from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2';
 import {
@@ -58,6 +59,7 @@ export interface BarcodeResultListItem {
 })
 export class BarcodeResultsPage implements OnInit {
   private utils = inject(CommonUtils);
+  private scanbotUtils = inject(ScanbotUtils);
   private activatedRoute = inject(ActivatedRoute);
 
   listItems: BarcodeResultListItem[] = [];
@@ -84,19 +86,32 @@ export class BarcodeResultsPage implements OnInit {
   }
 
   private getParsedDocument(parsedDocument: GenericDocument): string {
-    // parsedDocument can be wrapped to strongly typed document
-    switch (parsedDocument.type.name as RootTypeName) {
-      case 'BoardingPass':
-        const boardingPass = new BoardingPass(parsedDocument);
-        return JSON.stringify(boardingPass, null, 2);
-      case 'SwissQR':
-        const swissQR = new SwissQR(parsedDocument);
-        return JSON.stringify(swissQR, null, 2);
+    /**
+     * Fields from Generic Document could be managed in the following ways:
+     *
+     * 1. Extract all the fields from the Generic Document itself
+     * 2. Use the wrappers provided by ScanbotSDK and use the desired properties directly
+     *
+     */
+    const useDynamic = true
 
-      // ....
+    if (useDynamic) {
+      return this.scanbotUtils.extractGenericDocumentFields(parsedDocument)
+        .map(field => `${field.type.name}: ${field.value?.text}`)
+        .join("\n")
+    } else {
+      switch (parsedDocument.type.name as RootTypeName) {
+        case 'BoardingPass':
+          const boardingPass = new BoardingPass(parsedDocument);
+          return JSON.stringify(boardingPass, null, 2);
+        case 'SwissQR':
+          const swissQR = new SwissQR(parsedDocument);
+          return JSON.stringify(swissQR, null, 2);
+
+        // ....
+        default:
+          return JSON.stringify(parsedDocument, null, 2);
+      }
     }
-
-    // or used as generic document
-    return JSON.stringify(parsedDocument, null, 2);
   }
 }

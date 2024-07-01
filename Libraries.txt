@@ -1,6 +1,6 @@
 Open Source libraries used in the Scanbot Barcode Scanner SDK for Capacitor version 5.1.0
 
-Open Source libraries used in the Scanbot Barcode Scanner SDK for iOS version 5.1.1:
+Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 5.1.3:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -2532,7 +2532,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ------------------------------------------------------------------------------------------------------------------------
 
-Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 5.1.0
+Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 5.1.2
 CWAC-Camera
 
 Version 0.6.42

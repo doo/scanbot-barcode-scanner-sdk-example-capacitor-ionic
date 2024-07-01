@@ -19,6 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { CommonUtils } from 'src/app/utils/common-utils';
+import { ScanbotUtils } from "../../utils/scanbot-utils";
 
 import {
   BarcodeResultField,
@@ -58,6 +59,7 @@ export interface LegacyBarcodeResultListItem {
 })
 export class LegacyBarcodeResultsPage implements OnInit {
   private utils = inject(CommonUtils);
+  private scanbotUtils = inject(ScanbotUtils);
   private activatedRoute = inject(ActivatedRoute);
 
   listItems: LegacyBarcodeResultListItem[] = [];
@@ -84,19 +86,32 @@ export class LegacyBarcodeResultsPage implements OnInit {
   }
 
   private getFormattedResult(formattedResult: GenericDocument): string {
-    // formattedResult can be wrapped to strongly typed document
-    switch (formattedResult.type.name as RootTypeName) {
-      case 'BoardingPass':
-        const boardingPass = new BoardingPass(formattedResult);
-        return JSON.stringify(boardingPass, null, 2);
-      case 'SwissQR':
-        const swissQR = new SwissQR(formattedResult);
-        return JSON.stringify(swissQR, null, 2);
+    /**
+     * Fields from Generic Document could be managed in the following ways:
+     *
+     * 1. Extract all the fields from the Generic Document itself
+     * 2. Use the wrappers provided by ScanbotSDK and use the desired properties directly
+     *
+     */
+    const useDynamic = true
 
-      // ....
+    if (useDynamic) {
+      return this.scanbotUtils.extractGenericDocumentFields(formattedResult)
+        .map(field => `${field.type.name}: ${field.value?.text}`)
+        .join("\n")
+    } else {
+      switch (formattedResult.type.name as RootTypeName) {
+        case 'BoardingPass':
+          const boardingPass = new BoardingPass(formattedResult);
+          return JSON.stringify(boardingPass, null, 2);
+        case 'SwissQR':
+          const swissQR = new SwissQR(formattedResult);
+          return JSON.stringify(swissQR, null, 2);
+
+        // ....
+        default:
+          return JSON.stringify(formattedResult, null, 2);
+      }
     }
-
-    // or used as generic document
-    return JSON.stringify(formattedResult, null, 2);
   }
 }

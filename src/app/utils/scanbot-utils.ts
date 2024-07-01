@@ -4,6 +4,8 @@ import { Preferences } from '@capacitor/preferences';
 import {
   BarcodeDocumentFormat,
   BarcodeFormat,
+  GenericDocument,
+  Field,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 export interface Feature {
@@ -273,5 +275,21 @@ export class ScanbotUtils {
       key: this.BARCODE_DOCUMENT_FORMATS_FILTER_ENABLED_KEY,
       value: enabled.toString(),
     });
+  }
+
+  extractGenericDocumentFields(document: GenericDocument) {
+    let fields: Field[] = [];
+
+    if (document.fields.length > 0) {
+      fields = fields.concat(document.fields);
+    }
+
+    if (document.children.length > 0) {
+      document.children.forEach((child: GenericDocument) => {
+        fields = fields.concat(this.extractGenericDocumentFields(child));
+      });
+    }
+
+    return fields;
   }
 }
