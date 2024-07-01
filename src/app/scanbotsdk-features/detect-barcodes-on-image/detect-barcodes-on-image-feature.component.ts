@@ -25,7 +25,7 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
   private router = inject(Router);
 
   override feature = {
-    id: FeatureId.ScanBarcodes,
+    id: FeatureId.LegacyScanBarcodes,
     title: 'Import Image & Detect Barcodes',
   };
 
@@ -56,7 +56,7 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
       if (result.data?.barcodes && result.data.barcodes.length > 0) {
         // Handle the detected barcode(s) from result
         await this.router.navigate([
-          '/barcode-results',
+          '/legacy-barcode-results',
           JSON.stringify(result.data.barcodes),
         ]);
       } else {

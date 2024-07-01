@@ -4,6 +4,8 @@ import { Preferences } from '@capacitor/preferences';
 import {
   BarcodeDocumentFormat,
   BarcodeFormat,
+  GenericDocument,
+  Field,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 export interface Feature {
@@ -12,12 +14,16 @@ export interface Feature {
 }
 
 export enum FeatureId {
-  ScanBarcodes,
-  ScanBatchBarcodes,
+  RtuSingleScanning,
+  RtuMultiScanning,
+  RtuMultiArScanning,
+  RtuFindAndPickScanning,
   DetectBarcodesOnImage,
   ExtractImagesFromPdf,
   LicenseInfo,
   StorageCleanup,
+  LegacyScanBarcodes,
+  LegacyScanBatchBarcodes,
 }
 
 export interface BarcodeSetting {
@@ -94,12 +100,12 @@ export class ScanbotUtils {
         accepted: await this.isBarcodeFormatAccepted('MICRO_QR_CODE'),
       },
       {
-        format: 'RSS_14',
-        accepted: await this.isBarcodeFormatAccepted('RSS_14'),
+        format: 'DATABAR',
+        accepted: await this.isBarcodeFormatAccepted('DATABAR'),
       },
       {
-        format: 'RSS_EXPANDED',
-        accepted: await this.isBarcodeFormatAccepted('RSS_EXPANDED'),
+        format: 'DATABAR_EXPANDED',
+        accepted: await this.isBarcodeFormatAccepted('DATABAR_EXPANDED'),
       },
       {
         format: 'UPC_A',
@@ -269,5 +275,21 @@ export class ScanbotUtils {
       key: this.BARCODE_DOCUMENT_FORMATS_FILTER_ENABLED_KEY,
       value: enabled.toString(),
     });
+  }
+
+  extractGenericDocumentFields(document: GenericDocument) {
+    let fields: Field[] = [];
+
+    if (document.fields.length > 0) {
+      fields = fields.concat(document.fields);
+    }
+
+    if (document.children.length > 0) {
+      document.children.forEach((child: GenericDocument) => {
+        fields = fields.concat(this.extractGenericDocumentFields(child));
+      });
+    }
+
+    return fields;
   }
 }
