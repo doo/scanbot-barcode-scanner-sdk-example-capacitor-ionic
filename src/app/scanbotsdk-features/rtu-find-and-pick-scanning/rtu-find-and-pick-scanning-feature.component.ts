@@ -44,6 +44,9 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
     // Set the sheet mode for the barcodes preview.
     config.useCase.sheet.mode = 'COLLAPSED_SHEET';
 
+    // Enable AR Overlay
+    config.useCase.arOverlay.visible = true;
+
     // Enable/Disable the automatic selection.
     config.useCase.arOverlay.automaticSelectionEnabled = false;
 
