@@ -1,7 +1,6 @@
-Open Source libraries used in the Scanbot Barcode Scanner SDK for Capacitor version 4.2.0
+Open Source libraries used in the Scanbot Barcode Scanner SDK for Capacitor version 5.1.0
 
-```text
-Open Source libraries used in the Scanbot Barcode Scanner SDK for iOS version 4.2.2:
+Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 5.1.3:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -1230,6 +1229,18 @@ OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 WHETHER OR NOT ADVISED OF THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF 
 LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE 
 OF THIS SOFTWARE.
+
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+libzueci
+
+Version 1.0.0
+(https://sourceforge.net/projects/libzueci/)
+
+A simple, standalone, BSD-3-Clause C library for converting UTF-8 to/from Extended Channel Interpretations, as
+defined by AIM ITS/04-023 International Technical Standard - Extended Channel Interpretations Part 3: Register
+(Version 2, February 2022).
 
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -2508,6 +2519,7 @@ Version 1.1.0
 
 
 
+
 G8Tesseract
 Copyright @ 2014 Daniele Galiotto. https://github.com/gali8/Tesseract-OCR-iOS
 This library is distributed under the terms of a MIT License (https://github.com/gali8/Tesseract-OCR-iOS/blob/master/LICENSE.md).
@@ -2520,8 +2532,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ------------------------------------------------------------------------------------------------------------------------
 
-Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 4.2.0
-
+Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 5.1.2
 CWAC-Camera
 
 Version 0.6.42
@@ -3510,7 +3521,7 @@ SOFTWARE.
 
 libjpeg-turbo
 
-Version 2.1.2
+Version 2.1.5.1
 (https://github.com/libjpeg-turbo/libjpeg-turbo)
 
 libjpeg-turbo Licenses
@@ -3606,7 +3617,7 @@ best of our understanding.
 The Modified (3-clause) BSD License
 ===================================
 
-Copyright (C)2009-2021 D. R. Commander.  All Rights Reserved.<br>
+Copyright (C)2009-2023 D. R. Commander.  All Rights Reserved.<br>
 Copyright (C)2015 Viktor Szathmáry.  All Rights Reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -3651,7 +3662,7 @@ that were granted to the IJG for code derived from their software.
 
 libpng
 
-Version 1.6.36
+Version 1.6.40
 (https://github.com/glennrp/libpng)
 
 COPYRIGHT NOTICE, DISCLAIMER, and LICENSE
@@ -3660,8 +3671,8 @@ COPYRIGHT NOTICE, DISCLAIMER, and LICENSE
 PNG Reference Library License version 2
 ---------------------------------------
 
- * Copyright (c) 1995-2018 The PNG Reference Library Authors.
- * Copyright (c) 2018 Cosmin Truta.
+ * Copyright (c) 1995-2023 The PNG Reference Library Authors.
+ * Copyright (c) 2018-2023 Cosmin Truta.
  * Copyright (c) 2000-2002, 2004, 2006-2018 Glenn Randers-Pehrson.
  * Copyright (c) 1996-1997 Andreas Dilger.
  * Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
@@ -3669,7 +3680,7 @@ PNG Reference Library License version 2
 The software is supplied "as is", without warranty of any kind,
 express or implied, including, without limitation, the warranties
 of merchantability, fitness for a particular purpose, title, and
-non-infringement.  In no even shall the Copyright owners, or
+non-infringement.  In no event shall the Copyright owners, or
 anyone distributing the software, be liable for any damages or
 other liability, whether in contract, tort or otherwise, arising
 from, out of, or in connection with the software, or the use or
@@ -3695,7 +3706,7 @@ subject to the following restrictions:
 PNG Reference Library License version 1 (for libpng 0.5 through 1.6.35)
 -----------------------------------------------------------------------
 
-libpng versions 1.0.7, July 1, 2000 through 1.6.35, July 15, 2018 are
+libpng versions 1.0.7, July 1, 2000, through 1.6.35, July 15, 2018 are
 Copyright (c) 2000-2002, 2004, 2006-2018 Glenn Randers-Pehrson, are
 derived from libpng-1.0.6, and are distributed according to the same
 disclaimer and license as libpng-1.0.6 with the following individuals
@@ -3794,11 +3805,13 @@ be appreciated.
 
 libtiff
 
-Version 4.2.0
+Version 4.6.0
 (https://libtiff.gitlab.io/libtiff/)
 
-Copyright (c) 1988-1997 Sam Leffler
-Copyright (c) 1991-1997 Silicon Graphics, Inc.
+# LibTIFF license
+
+Copyright © 1988-1997 Sam Leffler\
+Copyright © 1991-1997 Silicon Graphics, Inc.
 
 Permission to use, copy, modify, distribute, and sell this software and
 its documentation for any purpose is hereby granted without fee, provided
@@ -3818,6 +3831,18 @@ OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 WHETHER OR NOT ADVISED OF THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF
 LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
 OF THIS SOFTWARE.
+
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+libzueci
+
+Version 1.0.0
+(https://sourceforge.net/projects/libzueci/)
+
+A simple, standalone, BSD-3-Clause C library for converting UTF-8 to/from Extended Channel Interpretations, as
+defined by AIM ITS/04-023 International Technical Standard - Extended Channel Interpretations Part 3: Register
+(Version 2, February 2022).
 
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -4882,4 +4907,3 @@ Version 1.1.0
    See the License for the specific language governing permissions and
    limitations under the License.
 
-```

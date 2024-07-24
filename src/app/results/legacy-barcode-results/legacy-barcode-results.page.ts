@@ -19,25 +19,25 @@ import {
 } from '@ionic/angular/standalone';
 
 import { CommonUtils } from 'src/app/utils/common-utils';
-import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
+import { ScanbotUtils } from "../../utils/scanbot-utils";
 
-import { BarcodeItem } from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2';
 import {
+  BarcodeResultField,
   BoardingPass,
   GenericDocument,
   RootTypeName,
   SwissQR,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
-export interface BarcodeResultListItem {
-  mainResult: BarcodeItem;
-  parsedDocument: string;
+export interface LegacyBarcodeResultListItem {
+  mainResult: BarcodeResultField;
+  formattedResult: string;
 }
 
 @Component({
-  selector: 'app-barcode-results',
-  templateUrl: './barcode-results.page.html',
-  styleUrls: ['./barcode-results.page.scss'],
+  selector: 'app-legacy-barcode-results',
+  templateUrl: './legacy-barcode-results.page.html',
+  styleUrls: ['./legacy-barcode-results.page.scss'],
   standalone: true,
   imports: [
     IonBackButton,
@@ -57,25 +57,25 @@ export interface BarcodeResultListItem {
     FormsModule,
   ],
 })
-export class BarcodeResultsPage implements OnInit {
+export class LegacyBarcodeResultsPage implements OnInit {
   private utils = inject(CommonUtils);
   private scanbotUtils = inject(ScanbotUtils);
   private activatedRoute = inject(ActivatedRoute);
 
-  listItems: BarcodeResultListItem[] = [];
+  listItems: LegacyBarcodeResultListItem[] = [];
 
   constructor() {}
 
   async ngOnInit() {
-    const barcodeResults: [BarcodeItem] = JSON.parse(
+    const barcodeResults: [BarcodeResultField] = JSON.parse(
       this.activatedRoute.snapshot.paramMap.get('results') as string
     );
 
     barcodeResults.forEach((result) => {
       this.listItems.push({
         mainResult: result,
-        parsedDocument: result.parsedDocument
-          ? this.getParsedDocument(result.parsedDocument)
+        formattedResult: result.formattedResult
+          ? this.getFormattedResult(result.formattedResult)
           : 'N/A',
       });
     });
@@ -85,7 +85,7 @@ export class BarcodeResultsPage implements OnInit {
     return this.utils.isiOSPlatform() ? 'Home' : '';
   }
 
-  private getParsedDocument(parsedDocument: GenericDocument): string {
+  private getFormattedResult(formattedResult: GenericDocument): string {
     /**
      * Fields from Generic Document could be managed in the following ways:
      *
@@ -96,21 +96,21 @@ export class BarcodeResultsPage implements OnInit {
     const useDynamic = true
 
     if (useDynamic) {
-      return this.scanbotUtils.extractGenericDocumentFields(parsedDocument)
+      return this.scanbotUtils.extractGenericDocumentFields(formattedResult)
         .map(field => `${field.type.name}: ${field.value?.text}`)
         .join("\n")
     } else {
-      switch (parsedDocument.type.name as RootTypeName) {
+      switch (formattedResult.type.name as RootTypeName) {
         case 'BoardingPass':
-          const boardingPass = new BoardingPass(parsedDocument);
+          const boardingPass = new BoardingPass(formattedResult);
           return JSON.stringify(boardingPass, null, 2);
         case 'SwissQR':
-          const swissQR = new SwissQR(parsedDocument);
+          const swissQR = new SwissQR(formattedResult);
           return JSON.stringify(swissQR, null, 2);
 
         // ....
         default:
-          return JSON.stringify(parsedDocument, null, 2);
+          return JSON.stringify(formattedResult, null, 2);
       }
     }
   }
