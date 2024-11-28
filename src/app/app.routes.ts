@@ -13,13 +13,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'legacy-barcode-results/:results',
-    loadComponent: () =>
-      import(
-        './results/legacy-barcode-results/legacy-barcode-results.page'
-      ).then((m) => m.LegacyBarcodeResultsPage),
-  },
-  {
     path: 'barcode-results/:results',
     loadComponent: () =>
       import('./results/barcode-results/barcode-results.page').then(
