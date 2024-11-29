@@ -6,6 +6,7 @@ import {
   BarcodeFormat,
   Field,
   GenericDocument,
+  ScanbotBarcodeSDK,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 export interface Feature {
@@ -223,5 +224,20 @@ export class ScanbotUtils {
       (await Preferences.get({key: barcodeDocumentFormat.toString()}))
         .value !== 'false'
     );
+  }
+
+  async decryptImageUrl(encryptedUrl: string): Promise<string> {
+    let imageAsBase64 = ""
+    try {
+      imageAsBase64 = (
+        await ScanbotBarcodeSDK.getImageData({
+          imageFileUri: encryptedUrl
+        })
+      ).data ?? "";
+    } catch (error: any) {
+      console.error(error.message)
+    }
+
+    return imageAsBase64;
   }
 }
