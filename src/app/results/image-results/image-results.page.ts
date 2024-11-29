@@ -58,11 +58,9 @@ export class ImageResultsPage implements OnInit {
       console.log(`Image ${index}: ${url}`);
 
       if (AppComponent.FILE_ENCRYPTION_ENABLED) {
-        console.log('decoding');
         const decryptedImage = `data:image/jpeg;base64,${await this.scanbotUtils.decryptImageUrl(url)}`
         this.convertedImageUrls.push(decryptedImage);
       } else {
-        console.log('using');
         this.convertedImageUrls.push(Capacitor.convertFileSrc(url));
       }
     });
