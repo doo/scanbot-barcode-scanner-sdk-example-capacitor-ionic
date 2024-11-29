@@ -24,7 +24,6 @@ export enum FeatureId {
   LicenseInfo,
   StorageCleanup,
   LegacyScanBarcodes,
-  LegacyScanBatchBarcodes,
 }
 
 export interface BarcodeSetting {
