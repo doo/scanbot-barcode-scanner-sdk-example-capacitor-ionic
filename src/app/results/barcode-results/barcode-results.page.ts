@@ -1,31 +1,31 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {Component, inject, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
   IonGrid,
-  IonList,
-  IonRow,
+  IonHeader,
   IonImg,
   IonItem,
   IonLabel,
-  IonButtons,
+  IonList,
   IonListHeader,
-  IonBackButton,
+  IonRow,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 
-import { CommonUtils } from 'src/app/utils/common-utils';
-import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
+import {CommonUtils} from 'src/app/utils/common-utils';
+import {ScanbotUtils} from 'src/app/utils/scanbot-utils';
 
-import { BarcodeItem } from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2';
+import {BarcodeItem} from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2';
 import {
+  BarcodeDocumentModelRootType,
   BoardingPass,
   GenericDocument,
-  RootTypeName,
   SwissQR,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
@@ -58,13 +58,13 @@ export interface BarcodeResultListItem {
   ],
 })
 export class BarcodeResultsPage implements OnInit {
+  listItems: BarcodeResultListItem[] = [];
   private utils = inject(CommonUtils);
   private scanbotUtils = inject(ScanbotUtils);
   private activatedRoute = inject(ActivatedRoute);
 
-  listItems: BarcodeResultListItem[] = [];
-
-  constructor() {}
+  constructor() {
+  }
 
   async ngOnInit() {
     const barcodeResults: [BarcodeItem] = JSON.parse(
@@ -100,14 +100,15 @@ export class BarcodeResultsPage implements OnInit {
         .map(field => `${field.type.name}: ${field.value?.text}`)
         .join("\n")
     } else {
-      switch (parsedDocument.type.name as RootTypeName) {
-        case 'BoardingPass':
+      switch (parsedDocument.type.name as BarcodeDocumentModelRootType) {
+        case 'BoardingPass': {
           const boardingPass = new BoardingPass(parsedDocument);
           return JSON.stringify(boardingPass, null, 2);
-        case 'SwissQR':
+        }
+        case 'SwissQR': {
           const swissQR = new SwissQR(parsedDocument);
           return JSON.stringify(swissQR, null, 2);
-
+        }
         // ....
         default:
           return JSON.stringify(parsedDocument, null, 2);

@@ -17,6 +17,8 @@ import {
 } from '@ionic/angular/standalone';
 
 import { CommonUtils } from 'src/app/utils/common-utils';
+import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-image-results',
@@ -40,6 +42,7 @@ import { CommonUtils } from 'src/app/utils/common-utils';
 })
 export class ImageResultsPage implements OnInit {
   private utils = inject(CommonUtils);
+  private scanbotUtils = inject(ScanbotUtils);
   private activatedRoute = inject(ActivatedRoute);
 
   convertedImageUrls: string[] = [];
@@ -51,10 +54,15 @@ export class ImageResultsPage implements OnInit {
       this.activatedRoute.snapshot.paramMap.get('imageUrls') as string
     );
 
-    originalImageUrls.forEach((url, index) => {
+    originalImageUrls.forEach(async (url, index) => {
       console.log(`Image ${index}: ${url}`);
 
-      this.convertedImageUrls.push(Capacitor.convertFileSrc(url));
+      if (AppComponent.FILE_ENCRYPTION_ENABLED) {
+        const decryptedImage = `data:image/jpeg;base64,${await this.scanbotUtils.decryptImageUrl(url)}`
+        this.convertedImageUrls.push(decryptedImage);
+      } else {
+        this.convertedImageUrls.push(Capacitor.convertFileSrc(url));
+      }
     });
   }
 

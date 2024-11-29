@@ -7,7 +7,7 @@ import {
   IonContent,
   IonList,
   IonItem,
-  IonLabel,
+  IonLabel, IonFooter,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
@@ -21,8 +21,6 @@ import { DetectBarcodesOnImageFeatureComponent } from '../scanbotsdk-features/de
 import { ExtractImagesFromPdfFeatureComponent } from '../scanbotsdk-features/extract-images-from-pdf/extract-images-from-pdf-feature.component';
 import { LicenseInfoFeatureComponent } from '../scanbotsdk-features/license-info/license-info-feature.component';
 import { StorageCleanupFeatureComponent } from '../scanbotsdk-features/storage-cleanup/storage-cleanup-feature.component';
-import { LegacyRtuBarcodeScannerFeatureComponent } from '../scanbotsdk-features/legacy-rtu-barcode-scanner/legacy-rtu-barcode-scanner-feature.component';
-import { LegacyRtuBatchBarcodeScannerFeatureComponent } from '../scanbotsdk-features/legacy-rtu-batch-barcode-scanner/legacy-rtu-batch-barcode-scanner-feature.component';
 
 import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
@@ -48,8 +46,7 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
     ExtractImagesFromPdfFeatureComponent,
     LicenseInfoFeatureComponent,
     StorageCleanupFeatureComponent,
-    LegacyRtuBarcodeScannerFeatureComponent,
-    LegacyRtuBatchBarcodeScannerFeatureComponent,
+    IonFooter,
   ],
 })
 export class HomePage {

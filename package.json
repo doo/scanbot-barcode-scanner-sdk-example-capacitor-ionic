@@ -1,6 +1,6 @@
 {
   "name": "scanbot-barcode-scanner-sdk-example",
-  "version": "5.1.0",
+  "version": "6.1.0",
   "author": "Scanbot SDK",
   "homepage": "https://scanbot.io",
   "scripts": {
@@ -14,7 +14,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "eslint": "eslint . --ext ts ",
-    "clean": "rm -r -f node_modules && cd ios/App && rm -r -f Pods && rm -f Podfile.lock"
+    "clean": "rm -r -f node_modules && rm -f package-lock.json && rm -r -f www && cd ios/App && rm -r -f Pods && rm -f Podfile.lock"
   },
   "private": true,
   "dependencies": {
@@ -38,7 +38,7 @@
     "@capacitor/status-bar": "^6.0.0",
     "@capawesome/capacitor-file-picker": "6.0.0",
     "@ionic/angular": "^7.5.0",
-    "capacitor-plugin-scanbot-barcode-scanner-sdk": "5.1.0",
+    "capacitor-plugin-scanbot-barcode-scanner-sdk": "6.1.0-rc.1",
     "ionicons": "^7.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
