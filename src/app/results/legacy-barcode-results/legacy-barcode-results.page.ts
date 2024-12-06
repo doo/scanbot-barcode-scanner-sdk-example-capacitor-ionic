@@ -1,31 +1,31 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {Component, inject, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
   IonGrid,
-  IonList,
-  IonRow,
+  IonHeader,
   IonImg,
   IonItem,
   IonLabel,
-  IonButtons,
+  IonList,
   IonListHeader,
-  IonBackButton,
+  IonRow,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 
-import { CommonUtils } from 'src/app/utils/common-utils';
-import { ScanbotUtils } from "../../utils/scanbot-utils";
+import {CommonUtils} from 'src/app/utils/common-utils';
+import {ScanbotUtils} from "../../utils/scanbot-utils";
 
 import {
+  BarcodeDocumentModelRootType,
   BarcodeResultField,
   BoardingPass,
   GenericDocument,
-  RootTypeName,
   SwissQR,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
@@ -58,13 +58,13 @@ export interface LegacyBarcodeResultListItem {
   ],
 })
 export class LegacyBarcodeResultsPage implements OnInit {
+  listItems: LegacyBarcodeResultListItem[] = [];
   private utils = inject(CommonUtils);
   private scanbotUtils = inject(ScanbotUtils);
   private activatedRoute = inject(ActivatedRoute);
 
-  listItems: LegacyBarcodeResultListItem[] = [];
-
-  constructor() {}
+  constructor() {
+  }
 
   async ngOnInit() {
     const barcodeResults: [BarcodeResultField] = JSON.parse(
@@ -100,14 +100,15 @@ export class LegacyBarcodeResultsPage implements OnInit {
         .map(field => `${field.type.name}: ${field.value?.text}`)
         .join("\n")
     } else {
-      switch (formattedResult.type.name as RootTypeName) {
-        case 'BoardingPass':
+      switch (formattedResult.type.name as BarcodeDocumentModelRootType) {
+        case 'BoardingPass': {
           const boardingPass = new BoardingPass(formattedResult);
           return JSON.stringify(boardingPass, null, 2);
-        case 'SwissQR':
+        }
+        case 'SwissQR': {
           const swissQR = new SwissQR(formattedResult);
           return JSON.stringify(swissQR, null, 2);
-
+        }
         // ....
         default:
           return JSON.stringify(formattedResult, null, 2);
