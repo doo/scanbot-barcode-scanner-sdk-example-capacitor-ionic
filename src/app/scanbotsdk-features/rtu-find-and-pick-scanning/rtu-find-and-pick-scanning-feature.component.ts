@@ -7,17 +7,16 @@ import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
 
 import {
-  startBarcodeScanner,
-  BarcodeScannerConfiguration,
+  ScanbotBarcodeSDK,
+  BarcodeScannerScreenConfiguration,
   FindAndPickScanningMode,
   ExpectedBarcode,
-} from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2';
+} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
   selector: 'app-rtu-find-and-pick-scanning-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
-  standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
 export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureComponent {
@@ -36,7 +35,7 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
     }
 
     // Create the default configuration object.
-    const config = new BarcodeScannerConfiguration();
+    const config = new BarcodeScannerScreenConfiguration();
 
     // Initialize the use case for find and pick scanning.
     config.useCase = new FindAndPickScanningMode();
@@ -71,37 +70,41 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
         barcodeValue: '123456',
         title: 'numeric barcode',
         count: 4,
-        image:
-          'https://avatars.githubusercontent.com/u/1454920',
+        image: 'https://avatars.githubusercontent.com/u/1454920',
       }),
       new ExpectedBarcode({
         barcodeValue: 'SCANBOT',
         title: 'value barcode',
         count: 3,
-        image:
-          'https://avatars.githubusercontent.com/u/1454920',
+        image: 'https://avatars.githubusercontent.com/u/1454920',
       }),
     ];
 
     // Set an array of accepted barcode types.
-    config.recognizerConfiguration.barcodeFormats =
+    config.scannerConfiguration.barcodeFormats =
       await this.scanbotUtils.getAcceptedBarcodeFormats();
-    config.recognizerConfiguration.acceptedDocumentFormats =
+    config.scannerConfiguration.extractedDocumentFormats =
       await this.scanbotUtils.getAcceptedBarcodeDocumentFormats();
 
     // Configure other parameters as needed.
 
     try {
-      const result = await startBarcodeScanner(config);
+      const result = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 
       if (result.status === 'CANCELED') {
         // User has canceled the scanning operation
-      } else if (result.data?.items && result.data.items.length > 0) {
+      } else if (result.data && result.data.items.length > 0) {
         // Handle the scanned barcode from result
-        await this.router.navigate([
-          '/barcode-results',
-          JSON.stringify(result.data.items),
-        ]);
+
+        // Get json parcelable barcodes
+        const resultContainer = await Promise.all(
+          result.data.items.map(async (item) => ({
+            ...(await item.barcode.serialize()),
+            count: item.count,
+          })),
+        );
+
+        await this.router.navigate(['/barcode-results', JSON.stringify(resultContainer)]);
       } else {
         await this.utils.showInfoAlert('No barcode scanned');
       }

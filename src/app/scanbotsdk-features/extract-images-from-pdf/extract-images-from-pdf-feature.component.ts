@@ -16,7 +16,6 @@ import {
   selector: 'app-extract-images-from-pdf-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
-  standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
 export class ExtractImagesFromPdfFeatureComponent extends ScanbotSdkFeatureComponent {
@@ -43,12 +42,12 @@ export class ExtractImagesFromPdfFeatureComponent extends ScanbotSdkFeatureCompo
       };
       await this.utils.showLoader();
 
-      const result = await ScanbotBarcodeSDK.extractImagesFromPDF(args);
+      const extractedImages = await ScanbotBarcodeSDK.extractImagesFromPDF(args);
 
       await this.utils.dismissLoader();
 
-      if (result.data && result.data.length > 0) {
-        await this.router.navigate(['/image-results', JSON.stringify(result.data)]);
+      if (extractedImages.length > 0) {
+        await this.router.navigate(['/image-results', JSON.stringify(extractedImages)]);
       } else {
         await this.utils.showInfoAlert('No images extracted');
       }

@@ -1,10 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import {
-  AlertController,
-  AlertOptions,
-  LoadingController,
-} from '@ionic/angular';
+import { AlertController, AlertOptions, LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -30,10 +26,7 @@ export class CommonUtils {
   }
 
   async showErrorAlert(error: any, onDismiss?: () => any) {
-    await this.showAlert(
-      { header: 'Error', message: error.message, buttons: ['OK'] },
-      onDismiss
-    );
+    await this.showAlert({ header: 'Error', message: error.message, buttons: ['OK'] }, onDismiss);
   }
 
   async showWarningAlert(warning: string) {

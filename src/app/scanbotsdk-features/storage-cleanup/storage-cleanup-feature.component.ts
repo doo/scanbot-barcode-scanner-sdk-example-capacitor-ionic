@@ -11,7 +11,6 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
   selector: 'app-storage-cleanup-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
-  standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
 export class StorageCleanupFeatureComponent extends ScanbotSdkFeatureComponent {
@@ -29,7 +28,7 @@ export class StorageCleanupFeatureComponent extends ScanbotSdkFeatureComponent {
     try {
       const result = await ScanbotBarcodeSDK.cleanup();
 
-      await this.utils.showInfoAlert(result?.data ?? 'SDK storage cleaned');
+      await this.utils.showInfoAlert(result);
     } catch (error: any) {
       await this.utils.showErrorAlert(error);
     }

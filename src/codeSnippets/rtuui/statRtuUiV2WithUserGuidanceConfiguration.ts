@@ -1,10 +1,13 @@
-import {BarcodeScannerConfiguration} from "capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2";
+import {
+  ScanbotBarcodeSDK,
+  BarcodeScannerScreenConfiguration,
+} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 async function statRtuUiV2WithUserGuidanceConfiguration() {
   // Create the default configuration object.
-  const config = new BarcodeScannerConfiguration();
+  const config = new BarcodeScannerScreenConfiguration();
 
-  // Hide/unhide the user guidance.
+  // Hide/show the user guidance.
   config.userGuidance.visible = true;
 
   // Configure the title.
@@ -15,4 +18,6 @@ async function statRtuUiV2WithUserGuidanceConfiguration() {
   config.userGuidance.background.fillColor = '#0000007A';
 
   // Configure other parameters as needed.
+
+  const result = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 }

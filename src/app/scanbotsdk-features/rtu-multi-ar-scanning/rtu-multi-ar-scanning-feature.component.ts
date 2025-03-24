@@ -7,17 +7,16 @@ import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
 
 import {
-  startBarcodeScanner,
-  BarcodeScannerConfiguration,
+  ScanbotBarcodeSDK,
+  BarcodeScannerScreenConfiguration,
   MultipleScanningMode,
   BarcodeMappedData,
-} from 'capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2';
+} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
   selector: 'app-rtu-multi-ar-scanning-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
-  standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
 export class RtuMultiArScanningFeatureComponent extends ScanbotSdkFeatureComponent {
@@ -36,7 +35,7 @@ export class RtuMultiArScanningFeatureComponent extends ScanbotSdkFeatureCompone
     }
 
     // Create the default configuration object.
-    const config = new BarcodeScannerConfiguration();
+    const config = new BarcodeScannerScreenConfiguration();
 
     // Configure the usecase.
     config.useCase = new MultipleScanningMode();
@@ -49,24 +48,30 @@ export class RtuMultiArScanningFeatureComponent extends ScanbotSdkFeatureCompone
     // Configure other parameters, pertaining to use case as needed.
 
     // Set an array of accepted barcode types.
-    config.recognizerConfiguration.barcodeFormats =
+    config.scannerConfiguration.barcodeFormats =
       await this.scanbotUtils.getAcceptedBarcodeFormats();
-    config.recognizerConfiguration.acceptedDocumentFormats =
+    config.scannerConfiguration.extractedDocumentFormats =
       await this.scanbotUtils.getAcceptedBarcodeDocumentFormats();
 
     // Configure other parameters as needed.
 
     try {
-      const result = await startBarcodeScanner(config);
+      const result = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 
       if (result.status === 'CANCELED') {
         // User has canceled the scanning operation
-      } else if (result.data?.items && result.data.items.length > 0) {
+      } else if (result.data && result.data.items.length > 0) {
         // Handle the scanned barcode from result
-        await this.router.navigate([
-          '/barcode-results',
-          JSON.stringify(result.data.items),
-        ]);
+
+        // Get json parcelable barcodes
+        const resultContainer = await Promise.all(
+          result.data.items.map(async (item) => ({
+            ...(await item.barcode.serialize()),
+            count: item.count,
+          })),
+        );
+
+        await this.router.navigate(['/barcode-results', JSON.stringify(resultContainer)]);
       } else {
         await this.utils.showInfoAlert('No barcode scanned');
       }

@@ -8,37 +8,24 @@ export const routes: Routes = [
   {
     path: 'image-results/:imageUrls',
     loadComponent: () =>
-      import('./results/image-results/image-results.page').then(
-        (m) => m.ImageResultsPage
-      ),
-  },
-  {
-    path: 'legacy-barcode-results/:results',
-    loadComponent: () =>
-      import(
-        './results/legacy-barcode-results/legacy-barcode-results.page'
-      ).then((m) => m.LegacyBarcodeResultsPage),
+      import('./results/image-results/image-results.page').then((m) => m.ImageResultsPage),
   },
   {
     path: 'barcode-results/:results',
     loadComponent: () =>
-      import('./results/barcode-results/barcode-results.page').then(
-        (m) => m.BarcodeResultsPage
-      ),
+      import('./results/barcode-results/barcode-results.page').then((m) => m.BarcodeResultsPage),
   },
   {
     path: 'barcode-formats',
     loadComponent: () =>
-      import('./settings/barcode-formats/barcode-formats.page').then(
-        (m) => m.BarcodeFormatsPage
-      ),
+      import('./settings/barcode-formats/barcode-formats.page').then((m) => m.BarcodeFormatsPage),
   },
   {
     path: 'barcode-document-formats',
     loadComponent: () =>
-      import(
-        './settings/barcode-document-formats/barcode-document-formats.page'
-      ).then((m) => m.BarcodeDocumentFormatsPage),
+      import('./settings/barcode-document-formats/barcode-document-formats.page').then(
+        (m) => m.BarcodeDocumentFormatsPage,
+      ),
   },
   {
     path: '',

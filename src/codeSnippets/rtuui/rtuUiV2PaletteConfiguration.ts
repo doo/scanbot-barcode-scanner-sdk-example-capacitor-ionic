@@ -1,8 +1,8 @@
-import {BarcodeScannerConfiguration} from "capacitor-plugin-scanbot-barcode-scanner-sdk/ui_v2";
+import { BarcodeScannerScreenConfiguration } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 function rtuUiV2PaletteConfiguration() {
   // Create the default configuration object.
-  const config = new BarcodeScannerConfiguration();
+  const config = new BarcodeScannerScreenConfiguration();
 
   // Simply alter one color and keep the other default.
   config.palette.sbColorPrimary = 'c86e19';

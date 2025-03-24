@@ -8,7 +8,9 @@ import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
 import { ImageUtils } from '../../utils/image-utils';
 
 import {
-  DetectBarcodesOnImageArguments,
+  BarcodeFormatCommonConfiguration,
+  BarcodeFormatCode128Configuration,
+  BarcodeScannerConfiguration,
   ScanbotBarcodeSDK,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
@@ -16,7 +18,6 @@ import {
   selector: 'app-detect-barcodes-on-image-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
-  standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
 export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComponent {
@@ -25,7 +26,7 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
   private router = inject(Router);
 
   override feature = {
-    id: FeatureId.LegacyScanBarcodes,
+    id: FeatureId.DetectBarcodesOnImage,
     title: 'Import Image & Detect Barcodes',
   };
 
@@ -39,26 +40,48 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
       // Select image from library
       const imageFileUri = await this.imageUtils.selectImageFromLibrary();
 
-      const args: DetectBarcodesOnImageArguments = {
-        imageFileUri: imageFileUri,
-        stripCheckDigits: true,
-        barcodeFormats: await this.scanbotUtils.getAcceptedBarcodeFormats(), // optional filter for specific barcode types
-        acceptedDocumentFormats:
-          await this.scanbotUtils.getAcceptedBarcodeDocumentFormats(), // optional filter for specific document types
-        // see further args ...
-      };
+      const scannerConfiguration = new BarcodeScannerConfiguration();
+      scannerConfiguration.extractedDocumentFormats =
+        await this.scanbotUtils.getAcceptedBarcodeDocumentFormats();
+
+      const barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      barcodeFormatCommonConfiguration.formats =
+        await this.scanbotUtils.getAcceptedBarcodeFormats();
+      barcodeFormatCommonConfiguration.stripCheckDigits = true;
+      barcodeFormatCommonConfiguration.minimumTextLength = 5;
+
+      // Configure different parameters for specific barcode format.
+      const barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
+      barcodeFormatCode128Configuration.minimumTextLength = 6;
+
+      scannerConfiguration.barcodeFormatConfigurations = [
+        barcodeFormatCommonConfiguration,
+        barcodeFormatCode128Configuration,
+      ];
+
+      // Configure other parameters as needed.
+
       await this.utils.showLoader();
 
-      const result = await ScanbotBarcodeSDK.detectBarcodesOnImage(args);
+      const result = await ScanbotBarcodeSDK.detectBarcodesOnImage({
+        imageFileUri: imageFileUri,
+        configuration: scannerConfiguration,
+      });
 
       await this.utils.dismissLoader();
 
-      if (result.data?.barcodes && result.data.barcodes.length > 0) {
+      if (result.success) {
         // Handle the detected barcode(s) from result
-        await this.router.navigate([
-          '/legacy-barcode-results',
-          JSON.stringify(result.data.barcodes),
-        ]);
+
+        // Get json parcelable barcodes
+        const resultContainer = await Promise.all(
+          result.barcodes.map(async (item) => ({
+            ...(await item.serialize()),
+            count: 1,
+          })),
+        );
+
+        await this.router.navigate(['/barcode-results', JSON.stringify(resultContainer)]);
       } else {
         await this.utils.showInfoAlert('No barcodes detected');
       }

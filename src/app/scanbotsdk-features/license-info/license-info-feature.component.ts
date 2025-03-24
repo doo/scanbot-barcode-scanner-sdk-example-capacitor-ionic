@@ -11,7 +11,6 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
   selector: 'app-license-info-feature',
   templateUrl: '../scanbotsdk-feature.component.html',
   styleUrls: ['../scanbotsdk-feature.component.scss'],
-  standalone: true,
   imports: [IonItem, IonLabel, NgIf],
 })
 export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
@@ -25,16 +24,14 @@ export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
       const result = await ScanbotBarcodeSDK.getLicenseInfo();
 
       const formattedText =
-        `• The license is ${
-          result.data?.isLicenseValid === true ? 'VALID' : 'NOT VALID'
-        }` +
+        `• The license is ${result.isLicenseValid ? 'VALID' : 'NOT VALID'}` +
         `<br />• Expiration Date:
           ${
-            result.data?.licenseExpirationDate
-              ? new Date(result.data?.licenseExpirationDate).toDateString()
+            result.licenseExpirationDate
+              ? new Date(result.licenseExpirationDate).toDateString()
               : 'N/A'
           }` +
-        `<br />• Status: ${result.data?.licenseStatus}`;
+        `<br />• Status: ${result.licenseStatus}`;
 
       await this.utils.showAlert({
         header: 'License',

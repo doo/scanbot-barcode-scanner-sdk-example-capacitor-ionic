@@ -14,16 +14,12 @@ import {
 } from '@ionic/angular/standalone';
 
 import { CommonUtils } from 'src/app/utils/common-utils';
-import {
-  BarcodeDocumentSetting,
-  ScanbotUtils,
-} from 'src/app/utils/scanbot-utils';
+import { BarcodeDocumentSetting, ScanbotUtils } from 'src/app/utils/scanbot-utils';
 
 @Component({
   selector: 'app-barcode-document-formats',
   templateUrl: './barcode-document-formats.page.html',
   styleUrls: ['./barcode-document-formats.page.scss'],
-  standalone: true,
   imports: [
     IonContent,
     IonHeader,
@@ -48,10 +44,8 @@ export class BarcodeDocumentFormatsPage implements OnInit {
   constructor() {}
 
   async ngOnInit() {
-    this.documentFormatsEnabled =
-      await this.scanbotUtils.isBarcodeDocumentFormatsFilterEnabled();
-    this.documentSettings =
-      await this.scanbotUtils.getBarcodeDocumentSettings();
+    this.documentFormatsEnabled = await this.scanbotUtils.isBarcodeDocumentFormatsFilterEnabled();
+    this.documentSettings = await this.scanbotUtils.getBarcodeDocumentSettings();
   }
 
   getBackButtonText() {
@@ -61,18 +55,10 @@ export class BarcodeDocumentFormatsPage implements OnInit {
   async documentFormatsEnabledStateChanged(event: any) {
     this.documentFormatsEnabled = event.target.checked;
 
-    await this.scanbotUtils.setBarcodeDocumentFormatsFilterEnabled(
-      this.documentFormatsEnabled
-    );
+    await this.scanbotUtils.setBarcodeDocumentFormatsFilterEnabled(this.documentFormatsEnabled);
   }
 
-  async documentSettingStateChanged(
-    event: any,
-    document: BarcodeDocumentSetting
-  ) {
-    await this.scanbotUtils.setBarcodeDocumentFormatAccepted(
-      document.format,
-      event.target.checked
-    );
+  async documentSettingStateChanged(event: any, document: BarcodeDocumentSetting) {
+    await this.scanbotUtils.setBarcodeDocumentFormatAccepted(document.format, event.target.checked);
   }
 }

@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Preferences} from '@capacitor/preferences';
+import { Injectable } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 
 import {
   BarcodeDocumentFormat,
+  BarcodeDocumentFormats,
   BarcodeFormat,
   Field,
   GenericDocument,
@@ -16,6 +17,7 @@ export interface Feature {
 
 export enum FeatureId {
   RtuSingleScanning,
+  RtuSingleScanningWithImageResults,
   RtuMultiScanning,
   RtuMultiArScanning,
   RtuFindAndPickScanning,
@@ -23,11 +25,12 @@ export enum FeatureId {
   ExtractImagesFromPdf,
   LicenseInfo,
   StorageCleanup,
-  LegacyScanBarcodes,
 }
 
+type SupportedBarcodeFormat = Exclude<BarcodeFormat, 'NONE'>;
+
 export interface BarcodeSetting {
-  format: BarcodeFormat;
+  format: SupportedBarcodeFormat;
   accepted: boolean;
 }
 
@@ -40,8 +43,7 @@ export interface BarcodeDocumentSetting {
   providedIn: 'root',
 })
 export class ScanbotUtils {
-
-  barcodeFormats: Record<BarcodeFormat, boolean> = {
+  barcodeFormats: Record<SupportedBarcodeFormat, boolean> = {
     AZTEC: true,
     CODABAR: true,
     CODE_25: true,
@@ -74,32 +76,34 @@ export class ScanbotUtils {
     CODE_32: true,
     MAXI_CODE: true,
     RMQR_CODE: true,
+    PZN_7: true,
+    PZN_8: true,
+    PHARMA_CODE: true,
+    PHARMA_CODE_TWO_TRACK: true,
   };
-  private readonly BARCODE_DOCUMENT_FORMATS_FILTER_ENABLED_KEY =
-    'barcodeDocumentFormatsEnabled';
+  private readonly BARCODE_DOCUMENT_FORMATS_FILTER_ENABLED_KEY = 'barcodeDocumentFormatsEnabled';
 
-  constructor() {
-  }
+  constructor() {}
 
   async getBarcodeSettings() {
     return Promise.all(
-      Object.keys(this.barcodeFormats).map(async key => ({
-        format: key,
-        accepted: await this.isBarcodeFormatAccepted(key as BarcodeFormat),
-      } as BarcodeSetting))
+      Object.keys(this.barcodeFormats).map(
+        async (key) =>
+          ({
+            format: key,
+            accepted: await this.isBarcodeFormatAccepted(key as SupportedBarcodeFormat),
+          }) as BarcodeSetting,
+      ),
     );
   }
 
-  async getAcceptedBarcodeFormats(): Promise<BarcodeFormat[]> {
+  async getAcceptedBarcodeFormats(): Promise<SupportedBarcodeFormat[]> {
     return (await this.getBarcodeSettings())
       .filter((x) => x.accepted)
-      .map((x) => x.format) as BarcodeFormat[];
+      .map((x) => x.format) as SupportedBarcodeFormat[];
   }
 
-  async setBarcodeFormatAccepted(
-    barcodeFormat: BarcodeFormat,
-    accepted: boolean
-  ) {
+  async setBarcodeFormatAccepted(barcodeFormat: SupportedBarcodeFormat, accepted: boolean) {
     await Preferences.set({
       key: barcodeFormat.toString(),
       value: accepted.toString(),
@@ -122,9 +126,7 @@ export class ScanbotUtils {
       },
       {
         format: 'MEDICAL_CERTIFICATE',
-        accepted: await this.isBarcodeDocumentFormatAccepted(
-          'MEDICAL_CERTIFICATE'
-        ),
+        accepted: await this.isBarcodeDocumentFormatAccepted('MEDICAL_CERTIFICATE'),
       },
       {
         format: 'ID_CARD_PDF_417',
@@ -146,6 +148,10 @@ export class ScanbotUtils {
         format: 'GS1',
         accepted: await this.isBarcodeDocumentFormatAccepted('GS1'),
       },
+      {
+        format: 'HIBC',
+        accepted: await this.isBarcodeDocumentFormatAccepted('HIBC'),
+      },
     ];
   }
 
@@ -157,13 +163,13 @@ export class ScanbotUtils {
         .filter((x) => x.accepted)
         .map((x) => x.format);
     } else {
-      return [];
+      return BarcodeDocumentFormats.all;
     }
   }
 
   async setBarcodeDocumentFormatAccepted(
     barcodeDocumentFormat: BarcodeDocumentFormat,
-    accepted: boolean
+    accepted: boolean,
   ) {
     await Preferences.set({
       key: barcodeDocumentFormat.toString(),
@@ -206,35 +212,25 @@ export class ScanbotUtils {
   }
 
   // Default is undefined (true). Only if explicitly is set to false, then it will be disabled.
-  private async isBarcodeFormatAccepted(
-    barcodeFormat: BarcodeFormat
-  ): Promise<boolean> {
-    return (
-      (await Preferences.get({key: barcodeFormat.toString()})).value !==
-      'false'
-    );
+  private async isBarcodeFormatAccepted(barcodeFormat: SupportedBarcodeFormat): Promise<boolean> {
+    return (await Preferences.get({ key: barcodeFormat.toString() })).value !== 'false';
   }
 
   // Default is undefined (true). Only if explicitly is set to false, then it will be disabled.
   private async isBarcodeDocumentFormatAccepted(
-    barcodeDocumentFormat: BarcodeDocumentFormat
+    barcodeDocumentFormat: BarcodeDocumentFormat,
   ): Promise<boolean> {
-    return (
-      (await Preferences.get({key: barcodeDocumentFormat.toString()}))
-        .value !== 'false'
-    );
+    return (await Preferences.get({ key: barcodeDocumentFormat.toString() })).value !== 'false';
   }
 
   async decryptImageUrl(encryptedUrl: string): Promise<string> {
-    let imageAsBase64 = ""
+    let imageAsBase64 = '';
     try {
-      imageAsBase64 = (
-        await ScanbotBarcodeSDK.getImageData({
-          imageFileUri: encryptedUrl
-        })
-      ).data ?? "";
+      imageAsBase64 = await ScanbotBarcodeSDK.getImageData({
+        imageFileUri: encryptedUrl,
+      });
     } catch (error: any) {
-      console.error(error.message)
+      console.error(error.message);
     }
 
     return imageAsBase64;
