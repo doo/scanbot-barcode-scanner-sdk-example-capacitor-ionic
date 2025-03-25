@@ -11,7 +11,11 @@
     <ion-list-header>
       <h3>Result {{ i + 1 }}</h3>
     </ion-list-header>
-    <ion-img *ngIf="item.image !== null" class="ion-padding" [src]="item.image" />
+    <ion-img
+      *ngIf="item.barcode.sourceImage !== null"
+      class="ion-padding"
+      [src]="`data:image/jpeg;base64,${item.barcode.sourceImage.buffer}`"
+    />
     <ion-item>
       <ion-label>
         <b>Count</b>

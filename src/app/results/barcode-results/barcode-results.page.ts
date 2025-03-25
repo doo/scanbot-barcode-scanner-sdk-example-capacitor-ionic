@@ -43,7 +43,6 @@ export type BarcodeResultContainer = DeepPartial<BarcodeItem> & {
 interface BarcodeResultListItem {
   barcode: BarcodeItem;
   count: number;
-  image: string | null;
 }
 
 @Component({
@@ -74,19 +73,15 @@ export class BarcodeResultsPage implements OnInit {
 
   constructor() {}
 
-  async ngOnInit() {
+  ngOnInit() {
     const barcodeResultContainers: [BarcodeResultContainer] = JSON.parse(
       this.activatedRoute.snapshot.paramMap.get('results') as string,
     );
 
-    barcodeResultContainers.forEach(async (result) => {
-      const barcode = new BarcodeItem(result);
-      const barcodeImageAsBase64 = await barcode.sourceImage?.encodeImage();
-
+    barcodeResultContainers.forEach((result) => {
       this.listItems.push({
-        barcode: barcode,
+        barcode: new BarcodeItem(result),
         count: result.count,
-        image: barcodeImageAsBase64 ? `data:image/jpeg;base64,${barcodeImageAsBase64}` : null,
       });
     });
   }
