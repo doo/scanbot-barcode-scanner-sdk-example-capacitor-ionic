@@ -73,7 +73,7 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
       if (result.success) {
         // Handle the detected barcode(s) from result
 
-        // Get json parcelable barcodes
+        // Get JSON parcelable barcode items
         const resultContainer = await Promise.all(
           result.barcodes.map(async (item) => ({
             ...(await item.serialize()),

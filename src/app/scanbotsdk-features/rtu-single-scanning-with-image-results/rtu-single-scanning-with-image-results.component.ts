@@ -89,7 +89,11 @@ export class RtuSingleScanningWithImageResultsFeatureComponent extends ScanbotSd
         } else if (result.data && result.data.items.length > 0) {
           // Handle the scanned barcode from result
 
-          // Get json parcelable barcodes
+          /** Get JSON parcelable barcode items
+           * By default, when we serialize barcodes, images are serialized as references.
+           * When we have images as references, we need to ensure their proper release using an autorelease pool.
+           * Since we only need to preview these images on the result screen, we can serialize them as buffers and immediately release the references from here.
+           */
           const resultContainer = await Promise.all(
             result.data.items.map(async (item) => ({
               ...(await item.barcode.serialize(

@@ -105,7 +105,7 @@ export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent
       } else if (result.data && result.data.items.length > 0) {
         // Handle the scanned barcode from result
 
-        // Get json parcelable barcodes
+        // Get JSON parcelable barcode items
         const resultContainer = await Promise.all(
           result.data.items.map(async (item) => ({
             ...(await item.barcode.serialize()),
