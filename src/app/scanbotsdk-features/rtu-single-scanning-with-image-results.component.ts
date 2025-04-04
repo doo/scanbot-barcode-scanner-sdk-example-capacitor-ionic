@@ -4,27 +4,29 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
-import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
+import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
   ScanbotBarcodeSDK,
   BarcodeScannerScreenConfiguration,
   SingleScanningMode,
+  autorelease,
+  ToJsonConfiguration,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
-  selector: 'app-rtu-single-scanning-feature',
-  templateUrl: '../scanbotsdk-feature.component.html',
-  styleUrls: ['../scanbotsdk-feature.component.scss'],
+  selector: 'app-rtu-single-scanning-with-image-results-feature',
+  templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
+  styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel, NgIf],
 })
-export class RtuSingleScanningFeatureComponent extends ScanbotSdkFeatureComponent {
+export class RtuSingleScanningWithImageResultsFeatureComponent extends ScanbotSdkFeatureComponent {
   private scanbotUtils = inject(ScanbotUtils);
   private router = inject(Router);
 
   override feature = {
     id: FeatureId.RtuSingleScanning,
-    title: 'RTU UI Single Scanning',
+    title: 'RTU UI Single Scanning With Image Results',
   };
 
   override async featureClicked() {
@@ -72,28 +74,40 @@ export class RtuSingleScanningFeatureComponent extends ScanbotSdkFeatureComponen
     config.scannerConfiguration.extractedDocumentFormats =
       await this.scanbotUtils.getAcceptedBarcodeDocumentFormats();
 
+    // Specify if the scanned barcode images should be included in the result.
+    config.scannerConfiguration.returnBarcodeImage = true;
+
     // Configure other parameters as needed.
 
     try {
-      const result = await ScanbotBarcodeSDK.startBarcodeScanner(config);
+      // An autorelease pool is mandatory only if image results are enabled.
+      await autorelease(async () => {
+        const result = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 
-      if (result.status === 'CANCELED') {
-        // User has canceled the scanning operation
-      } else if (result.data && result.data.items.length > 0) {
-        // Handle the scanned barcode from result
+        if (result.status === 'CANCELED') {
+          // User has canceled the scanning operation
+        } else if (result.data && result.data.items.length > 0) {
+          // Handle the scanned barcode from result
 
-        // Get JSON parcelable barcode items
-        const resultContainer = await Promise.all(
-          result.data.items.map(async (item) => ({
-            ...(await item.barcode.serialize()),
-            count: item.count,
-          })),
-        );
+          /** Get JSON parcelable barcode items
+           * By default, when we serialize barcodes, images are serialized as references.
+           * When we have images as references, we need to ensure their proper release using an autorelease pool.
+           * Since we only need to preview these images on the result screen, we can serialize them as buffers and immediately release the references from here.
+           */
+          const resultContainer = await Promise.all(
+            result.data.items.map(async (item) => ({
+              ...(await item.barcode.serialize(
+                new ToJsonConfiguration({ imageSerializationMode: 'BUFFER' }),
+              )),
+              count: item.count,
+            })),
+          );
 
-        await this.router.navigate(['/barcode-results', JSON.stringify(resultContainer)]);
-      } else {
-        await this.utils.showInfoAlert('No barcode scanned');
-      }
+          await this.router.navigate(['/barcode-results', JSON.stringify(resultContainer)]);
+        } else {
+          await this.utils.showInfoAlert('No barcode scanned');
+        }
+      });
     } catch (error: any) {
       await this.utils.showErrorAlert(error);
     }

@@ -4,7 +4,7 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
-import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
+import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
   ScanbotBarcodeSDK,
@@ -15,8 +15,8 @@ import {
 
 @Component({
   selector: 'app-rtu-multi-scanning-feature',
-  templateUrl: '../scanbotsdk-feature.component.html',
-  styleUrls: ['../scanbotsdk-feature.component.scss'],
+  templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
+  styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel, NgIf],
 })
 export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent {

@@ -2,8 +2,8 @@ import { Component, Input, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { NgIf } from '@angular/common';
 
-import { CommonUtils } from '../utils/common-utils';
-import { Feature } from '../utils/scanbot-utils';
+import { CommonUtils } from '../../utils/common-utils';
+import { Feature } from '../../utils/scanbot-utils';
 
 import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 

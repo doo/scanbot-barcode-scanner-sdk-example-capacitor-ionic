@@ -1,6 +1,6 @@
 import { BarcodeScannerScreenConfiguration } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
-function rtuUiV2PaletteConfiguration() {
+function rtuUiPaletteConfiguration() {
   // Create the default configuration object.
   const config = new BarcodeScannerScreenConfiguration();
 

@@ -4,28 +4,27 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
-import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
+import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
   ScanbotBarcodeSDK,
   BarcodeScannerScreenConfiguration,
-  MultipleScanningMode,
-  BarcodeMappedData,
+  SingleScanningMode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
-  selector: 'app-rtu-multi-ar-scanning-feature',
-  templateUrl: '../scanbotsdk-feature.component.html',
-  styleUrls: ['../scanbotsdk-feature.component.scss'],
+  selector: 'app-rtu-single-scanning-feature',
+  templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
+  styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel, NgIf],
 })
-export class RtuMultiArScanningFeatureComponent extends ScanbotSdkFeatureComponent {
+export class RtuSingleScanningFeatureComponent extends ScanbotSdkFeatureComponent {
   private scanbotUtils = inject(ScanbotUtils);
   private router = inject(Router);
 
   override feature = {
-    id: FeatureId.RtuMultiArScanning,
-    title: 'RTU UI Multi AR Scanning',
+    id: FeatureId.RtuSingleScanning,
+    title: 'RTU UI Single Scanning',
   };
 
   override async featureClicked() {
@@ -37,15 +36,35 @@ export class RtuMultiArScanningFeatureComponent extends ScanbotSdkFeatureCompone
     // Create the default configuration object.
     const config = new BarcodeScannerScreenConfiguration();
 
-    // Configure the usecase.
-    config.useCase = new MultipleScanningMode();
-    config.useCase.mode = 'UNIQUE';
-    config.useCase.sheet.mode = 'COLLAPSED_SHEET';
-    config.useCase.sheet.collapsedVisibleHeight = 'SMALL';
-    // Configure AR Overlay.
-    config.useCase.arOverlay.visible = true;
-    config.useCase.arOverlay.automaticSelectionEnabled = false;
-    // Configure other parameters, pertaining to use case as needed.
+    // Initialize the use case for single scanning.
+    config.useCase = new SingleScanningMode();
+
+    // Enable and configure the confirmation sheet.
+    config.useCase.confirmationSheetEnabled = true;
+    config.useCase.sheetColor = '#FFFFFF';
+
+    // Hide/show the barcode image.
+    config.useCase.barcodeImageVisible = true;
+
+    // Configure the barcode title of the confirmation sheet.
+    config.useCase.barcodeTitle.visible = true;
+    config.useCase.barcodeTitle.color = '#000000';
+
+    // Configure the barcode subtitle of the confirmation sheet.
+    config.useCase.barcodeSubtitle.visible = true;
+    config.useCase.barcodeSubtitle.color = '#000000';
+
+    // Configure the cancel button of the confirmation sheet.
+    config.useCase.cancelButton.text = 'Close';
+    config.useCase.cancelButton.foreground.color = '#C8193C';
+    config.useCase.cancelButton.background.fillColor = '#00000000';
+
+    // Configure the submit button of the confirmation sheet.
+    config.useCase.submitButton.text = 'Submit';
+    config.useCase.submitButton.foreground.color = '#FFFFFF';
+    config.useCase.submitButton.background.fillColor = '#C8193C';
+
+    // Configure other parameters, pertaining to single-scanning mode as needed.
 
     // Set an array of accepted barcode types.
     config.scannerConfiguration.barcodeFormats =

@@ -3,14 +3,14 @@ import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { NgIf } from '@angular/common';
 
 import { FeatureId } from 'src/app/utils/scanbot-utils';
-import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
+import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
   selector: 'app-storage-cleanup-feature',
-  templateUrl: '../scanbotsdk-feature.component.html',
-  styleUrls: ['../scanbotsdk-feature.component.scss'],
+  templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
+  styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel, NgIf],
 })
 export class StorageCleanupFeatureComponent extends ScanbotSdkFeatureComponent {

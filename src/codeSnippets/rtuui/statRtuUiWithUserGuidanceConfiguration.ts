@@ -3,7 +3,7 @@ import {
   BarcodeScannerScreenConfiguration,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
-async function statRtuUiV2WithUserGuidanceConfiguration() {
+async function statRtuUiWithUserGuidanceConfiguration() {
   // Create the default configuration object.
   const config = new BarcodeScannerScreenConfiguration();
 

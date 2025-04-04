@@ -4,8 +4,8 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
-import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
-import { ImageUtils } from '../../utils/image-utils';
+import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
+import { ImageUtils } from '../utils/image-utils';
 
 import {
   BarcodeFormatCommonConfiguration,
@@ -16,8 +16,8 @@ import {
 
 @Component({
   selector: 'app-detect-barcodes-on-image-feature',
-  templateUrl: '../scanbotsdk-feature.component.html',
-  styleUrls: ['../scanbotsdk-feature.component.scss'],
+  templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
+  styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel, NgIf],
 })
 export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComponent {

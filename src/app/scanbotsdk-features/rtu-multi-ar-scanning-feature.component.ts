@@ -4,28 +4,28 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
-import { ScanbotSdkFeatureComponent } from '../scanbotsdk-feature.component';
+import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
   ScanbotBarcodeSDK,
   BarcodeScannerScreenConfiguration,
-  FindAndPickScanningMode,
-  ExpectedBarcode,
+  MultipleScanningMode,
+  BarcodeMappedData,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
-  selector: 'app-rtu-find-and-pick-scanning-feature',
-  templateUrl: '../scanbotsdk-feature.component.html',
-  styleUrls: ['../scanbotsdk-feature.component.scss'],
+  selector: 'app-rtu-multi-ar-scanning-feature',
+  templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
+  styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel, NgIf],
 })
-export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureComponent {
+export class RtuMultiArScanningFeatureComponent extends ScanbotSdkFeatureComponent {
   private scanbotUtils = inject(ScanbotUtils);
   private router = inject(Router);
 
   override feature = {
-    id: FeatureId.RtuFindAndPickScanning,
-    title: 'RTU UI Find And Pick Scanning',
+    id: FeatureId.RtuMultiArScanning,
+    title: 'RTU UI Multi AR Scanning',
   };
 
   override async featureClicked() {
@@ -37,48 +37,15 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
     // Create the default configuration object.
     const config = new BarcodeScannerScreenConfiguration();
 
-    // Initialize the use case for find and pick scanning.
-    config.useCase = new FindAndPickScanningMode();
-
-    // Set the sheet mode for the barcodes preview.
+    // Configure the usecase.
+    config.useCase = new MultipleScanningMode();
+    config.useCase.mode = 'UNIQUE';
     config.useCase.sheet.mode = 'COLLAPSED_SHEET';
-
-    // Enable AR Overlay
+    config.useCase.sheet.collapsedVisibleHeight = 'SMALL';
+    // Configure AR Overlay.
     config.useCase.arOverlay.visible = true;
-
-    // Enable/Disable the automatic selection.
     config.useCase.arOverlay.automaticSelectionEnabled = false;
-
-    // Set the height for the collapsed sheet.
-    config.useCase.sheet.collapsedVisibleHeight = 'LARGE';
-
-    // Enable manual count change.
-    config.useCase.sheetContent.manualCountChangeEnabled = true;
-
-    // Set the delay before same barcode counting repeat.
-    config.useCase.countingRepeatDelay = 1000;
-
-    // Configure the submit button.
-    config.useCase.sheetContent.submitButton.text = 'Submit';
-    config.useCase.sheetContent.submitButton.foreground.color = '#000000';
-
-    // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
-
-    // Set the expected barcodes.
-    config.useCase.expectedBarcodes = [
-      new ExpectedBarcode({
-        barcodeValue: '123456',
-        title: 'numeric barcode',
-        count: 4,
-        image: 'https://avatars.githubusercontent.com/u/1454920',
-      }),
-      new ExpectedBarcode({
-        barcodeValue: 'SCANBOT',
-        title: 'value barcode',
-        count: 3,
-        image: 'https://avatars.githubusercontent.com/u/1454920',
-      }),
-    ];
+    // Configure other parameters, pertaining to use case as needed.
 
     // Set an array of accepted barcode types.
     config.scannerConfiguration.barcodeFormats =
