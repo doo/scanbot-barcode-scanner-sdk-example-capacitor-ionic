@@ -12,7 +12,7 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (7.0.0):
     - Capacitor
-  - CapacitorPluginScanbotBarcodeScannerSdk (7.0.0-alpha.1):
+  - CapacitorPluginScanbotBarcodeScannerSdk (7.0.0-rc.1):
     - Capacitor
     - ScanbotBarcodeSDKWrapper (= 7.0.0.0)
   - CapacitorPreferences (7.0.0):
@@ -75,7 +75,7 @@ SPEC CHECKSUMS:
   CapacitorFilesystem: 59a2b7b56a897c6a3de4d04c5718e1d80de9d2f5
   CapacitorHaptics: 7be406a91e4eb87287f321c6c68e1709d6837b3a
   CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
-  CapacitorPluginScanbotBarcodeScannerSdk: 6b28618d625bf1ab1014c6884803d09815ecdd66
+  CapacitorPluginScanbotBarcodeScannerSdk: 12344083b7746d5e67933128035e3872d34a5322
   CapacitorPreferences: 8e4bef1f937fc991a19d7ea99330c36a62edd24b
   CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
   CapawesomeCapacitorFilePicker: 640114d8fd427375fe0e826ffc1ca54d91c2d611
