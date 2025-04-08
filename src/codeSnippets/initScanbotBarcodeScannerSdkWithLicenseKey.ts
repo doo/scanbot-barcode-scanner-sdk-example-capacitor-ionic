@@ -1,4 +1,7 @@
-import {ScanbotBarcodeSDK, ScanbotBarcodeSdkConfiguration} from "capacitor-plugin-scanbot-barcode-scanner-sdk";
+import {
+  ScanbotBarcodeSDK,
+  ScanbotBarcodeSdkConfiguration,
+} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 async function initScanbotBarcodeScannerSdkWithLicenseKey() {
   // Please note: this is just an example license key string (it is not a valid license)
@@ -21,7 +24,7 @@ async function initScanbotBarcodeScannerSdkWithLicenseKey() {
 
   try {
     const result = await ScanbotBarcodeSDK.initializeSdk(config);
-    console.log(result.data);
+    console.log(result);
   } catch (error: any) {
     console.error(error);
   }

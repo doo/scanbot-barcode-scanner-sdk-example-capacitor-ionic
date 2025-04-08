@@ -26,9 +26,7 @@ export class FileUtils {
     }
 
     throw new Error(
-      `No PDF file picked${
-        pickFilesErrorMessage ? ': ' + pickFilesErrorMessage : ''
-      }`
+      `No PDF file picked${pickFilesErrorMessage ? ': ' + pickFilesErrorMessage : ''}`,
     );
   }
 }

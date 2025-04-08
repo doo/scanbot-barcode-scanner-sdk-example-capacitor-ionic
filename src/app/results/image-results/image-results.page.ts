@@ -11,7 +11,6 @@ import {
   IonBackButton,
   IonToolbar,
   IonRow,
-  IonCol,
   IonImg,
   IonButtons,
 } from '@ionic/angular/standalone';
@@ -24,7 +23,6 @@ import { AppComponent } from 'src/app/app.component';
   selector: 'app-image-results',
   templateUrl: './image-results.page.html',
   styleUrls: ['./image-results.page.scss'],
-  standalone: true,
   imports: [
     IonContent,
     IonGrid,
@@ -33,7 +31,6 @@ import { AppComponent } from 'src/app/app.component';
     IonBackButton,
     IonToolbar,
     IonRow,
-    IonCol,
     IonImg,
     IonButtons,
     CommonModule,
@@ -51,14 +48,12 @@ export class ImageResultsPage implements OnInit {
 
   async ngOnInit() {
     const originalImageUrls: string[] = JSON.parse(
-      this.activatedRoute.snapshot.paramMap.get('imageUrls') as string
+      this.activatedRoute.snapshot.paramMap.get('imageUrls') as string,
     );
 
-    originalImageUrls.forEach(async (url, index) => {
-      console.log(`Image ${index}: ${url}`);
-
+    originalImageUrls.forEach(async (url) => {
       if (AppComponent.FILE_ENCRYPTION_ENABLED) {
-        const decryptedImage = `data:image/jpeg;base64,${await this.scanbotUtils.decryptImageUrl(url)}`
+        const decryptedImage = `data:image/jpeg;base64,${await this.scanbotUtils.decryptImageUrl(url)}`;
         this.convertedImageUrls.push(decryptedImage);
       } else {
         this.convertedImageUrls.push(Capacitor.convertFileSrc(url));

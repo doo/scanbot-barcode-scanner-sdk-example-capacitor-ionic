@@ -9,42 +9,49 @@
 <ion-content [fullscreen]="true">
   <ion-list *ngFor="let item of listItems; let i = index">
     <ion-list-header>
-      <h2>Result {{ i + 1 }}</h2>
+      <h3>Result {{ i + 1 }}</h3>
     </ion-list-header>
+    <ion-img
+      *ngIf="item.barcode.sourceImage !== null"
+      class="ion-padding"
+      [src]="`data:image/jpeg;base64,${item.barcode.sourceImage.buffer}`"
+    />
     <ion-item>
       <ion-label>
-        <h2>Type</h2>
-        <p>{{ item.mainResult.type }}</p>
+        <b>Count</b>
+        <p>{{ item.count }}</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h2>Count</h2>
-        <p>{{ item.mainResult.count }}</p>
+        <b>Format</b>
+        <p>{{ item.barcode.format }}</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h2>Text</h2>
-        <p>{{ item.mainResult.text }}</p>
+        <b>Text</b>
+        <p>{{ item.barcode.text }}</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h2>Text with extensions</h2>
-        <p>{{ item.mainResult.textWithExtension }}</p>
+        <b>Extension</b>
+        <p>{{ item.barcode.upcEanExtension === '' ? 'N/A' : item.barcode.upcEanExtension }}</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h2>Raw bytes</h2>
-        <p>{{ item.mainResult.rawBytes }}</p>
+        <b>Raw bytes</b>
+        <p>{{ item.barcode.rawBytes }}</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h2>Parsed document</h2>
-        <p style="white-space: pre-line">{{ item.parsedDocument }}</p>
+        <b>Parsed document</b>
+        <p style="white-space: pre-line">
+          {{ getExtractedDocument(item.barcode.extractedDocument) }}
+        </p>
       </ion-label>
     </ion-item>
   </ion-list>

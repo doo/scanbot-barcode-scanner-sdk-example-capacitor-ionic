@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { environment } from 'src/environments/environment';
 
 import { Colors } from 'src/theme/theme';
 
@@ -9,12 +10,10 @@ import {
   ScanbotBarcodeSDK,
   ScanbotBarcodeSdkConfiguration,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  standalone: true,
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent implements OnInit {
@@ -51,6 +50,7 @@ export class AppComponent implements OnInit {
   constructor() {
     StatusBar.setStyle({ style: Style.Dark });
     StatusBar.setBackgroundColor({ color: Colors.scanbotRed });
+    StatusBar.setOverlaysWebView({ overlay: false });
   }
 
   ngOnInit(): void {
@@ -62,9 +62,7 @@ export class AppComponent implements OnInit {
       licenseKey: this.licenseKey,
       loggingEnabled: !environment.production,
       // storageBaseDirectory: (await this.storageBaseDirectoryUri).uri, // Custom storage path
-      fileEncryptionMode: AppComponent.FILE_ENCRYPTION_ENABLED
-        ? 'AES256'
-        : undefined,
+      fileEncryptionMode: AppComponent.FILE_ENCRYPTION_ENABLED ? 'AES256' : undefined,
       fileEncryptionPassword: AppComponent.FILE_ENCRYPTION_ENABLED
         ? 'SomeSecretPa$$w0rdForFileEncryption'
         : undefined,
@@ -73,7 +71,7 @@ export class AppComponent implements OnInit {
 
     try {
       const result = await ScanbotBarcodeSDK.initializeSdk(config);
-      console.log(result.data);
+      console.log(result);
     } catch (error: any) {
       console.error(error);
     }

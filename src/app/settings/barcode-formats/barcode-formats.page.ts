@@ -20,7 +20,6 @@ import { BarcodeSetting, ScanbotUtils } from 'src/app/utils/scanbot-utils';
   selector: 'app-barcode-formats',
   templateUrl: './barcode-formats.page.html',
   styleUrls: ['./barcode-formats.page.scss'],
-  standalone: true,
   imports: [
     IonContent,
     IonHeader,
@@ -52,9 +51,6 @@ export class BarcodeFormatsPage implements OnInit {
   }
 
   async barcodeSettingStateChanged(event: any, barcode: BarcodeSetting) {
-    await this.scanbotUtils.setBarcodeFormatAccepted(
-      barcode.format,
-      event.target.checked
-    );
+    await this.scanbotUtils.setBarcodeFormatAccepted(barcode.format, event.target.checked);
   }
 }
