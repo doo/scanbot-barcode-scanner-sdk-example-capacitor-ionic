@@ -124,7 +124,7 @@ export class BarcodeResultsPage implements OnInit {
         case 'AAMVA': {
           const aamva = new AAMVA(extractedDocument);
           return (
-            `File type: ${aamva.issuerIdentificationNumber.value?.text} \n` +
+            `Issuer Identification Number: ${aamva.issuerIdentificationNumber.value?.text} \n` +
             `Aamva version number: ${aamva.version.value?.text}`
           );
           // ... read all properties needed
