@@ -8,18 +8,18 @@ PODS:
   - CapacitorCordova (7.1.0)
   - CapacitorFilesystem (7.0.0):
     - Capacitor
-  - CapacitorPluginScanbotBarcodeScannerSdk (7.0.0-rc.3):
+  - CapacitorPluginScanbotBarcodeScannerSdk (7.0.0-rc.4):
     - Capacitor
-    - ScanbotBarcodeSDKWrapper (= 7.0.1.1)
+    - ScanbotBarcodeSDKWrapper (= 7.0.2.4)
   - CapacitorPreferences (7.0.0):
     - Capacitor
   - CapacitorStatusBar (7.0.0):
     - Capacitor
   - CapawesomeCapacitorFilePicker (7.0.1):
     - Capacitor
-  - ScanbotBarcodeScannerSDK (7.0.1)
-  - ScanbotBarcodeSDKWrapper (7.0.1.1):
-    - ScanbotBarcodeScannerSDK (= 7.0.1)
+  - ScanbotBarcodeScannerSDK (7.0.2)
+  - ScanbotBarcodeSDKWrapper (7.0.2.4):
+    - ScanbotBarcodeScannerSDK (= 7.0.2)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -63,12 +63,12 @@ SPEC CHECKSUMS:
   CapacitorCamera: 20a37684b81c69c0c33fb5a7216919f135371a6f
   CapacitorCordova: 866217f32c1d25b326c568a10ea3ed0c36b13e29
   CapacitorFilesystem: 59a2b7b56a897c6a3de4d04c5718e1d80de9d2f5
-  CapacitorPluginScanbotBarcodeScannerSdk: afc566e263e235df1fe5f113d1004f39cbe43bbb
+  CapacitorPluginScanbotBarcodeScannerSdk: 7b2c36cbca9eabdeed40f4030ef10789e9ee4d7d
   CapacitorPreferences: 8e4bef1f937fc991a19d7ea99330c36a62edd24b
   CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
   CapawesomeCapacitorFilePicker: 640114d8fd427375fe0e826ffc1ca54d91c2d611
-  ScanbotBarcodeScannerSDK: e881beb38670ebac2ba1440386a50c7de4634be8
-  ScanbotBarcodeSDKWrapper: 7ecf318e6e11dbc6f397bd119ab576500c1d35fc
+  ScanbotBarcodeScannerSDK: 8e0449d0474243c8031285a3ba939ec43d7dcdfe
+  ScanbotBarcodeSDKWrapper: 1dfbd37d83e7c89dc6e0a10be2d5a4f75dfc3778
 
 PODFILE CHECKSUM: fc18f1865e5982956b335cca25de92452fcec1c9
 
