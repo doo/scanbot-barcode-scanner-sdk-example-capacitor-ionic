@@ -28,9 +28,7 @@ export class ImageUtils {
       return photo.path;
     } else {
       throw new Error(
-        `No image picked${
-          pickImageErrorMessage ? '. ' + pickImageErrorMessage : ''
-        }`
+        `No image picked${pickImageErrorMessage ? '. ' + pickImageErrorMessage : ''}`,
       );
     }
   }
