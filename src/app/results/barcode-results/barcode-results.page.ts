@@ -108,7 +108,7 @@ export class BarcodeResultsPage implements OnInit {
         case 'BoardingPass': {
           const boardingPass = new BoardingPass(extractedDocument);
           return (
-            `Name: ${boardingPass.name.value?.text} \n` +
+            `Name: ${boardingPass.passengerName.value?.text} \n` +
             `Number Of Legs: ${boardingPass.numberOfLegs.value?.text}`
           );
           // ... read all properties needed
@@ -164,7 +164,7 @@ export class BarcodeResultsPage implements OnInit {
         case 'VCard': {
           const vCard = new VCard(extractedDocument);
           return (
-            `First Name: ${vCard.firstName?.rawValue?.value?.text} \n` +
+            `Name: ${vCard.name?.rawValue?.value?.text} \n` +
             `Birthday: ${vCard.birthday?.rawValue?.value?.text}`
           );
           // ... read all properties needed
