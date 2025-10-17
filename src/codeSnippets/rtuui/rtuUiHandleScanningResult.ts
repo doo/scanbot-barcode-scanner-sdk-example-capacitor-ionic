@@ -18,7 +18,5 @@ async function handleScanningResult() {
       rawValue: barcode.rawBytes, // The raw value of the barcode
       document: barcode.extractedDocument, // The embedded barcode document
     }));
-
-    return requiredBarcodeInfo;
   }
 }
