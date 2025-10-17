@@ -1,6 +1,6 @@
 {
   "name": "scanbot-barcode-scanner-sdk-example",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "author": "Scanbot SDK",
   "homepage": "https://scanbot.io",
   "description": "Scanbot Barcode Scanner SDK Example App for Capacitor with Angular",
