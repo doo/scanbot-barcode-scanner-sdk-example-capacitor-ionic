@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
-
 import { FeatureId } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
@@ -11,7 +9,7 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
   selector: 'app-storage-cleanup-feature',
   templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
-  imports: [IonItem, IonLabel, NgIf],
+  imports: [IonItem, IonLabel],
 })
 export class StorageCleanupFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
@@ -20,15 +18,14 @@ export class StorageCleanupFeatureComponent extends ScanbotSdkFeatureComponent {
   };
 
   override async featureClicked() {
-    // Always make sure you have a valid license on runtime via ScanbotBarcodeSDK.getLicenseInfo()
+    // Always make sure you have a valid license on runtime via ScanbotSDK.getLicenseInfo()
     if (!(await this.isLicenseValid())) {
       return;
     }
 
     try {
-      const result = await ScanbotBarcodeSDK.cleanup();
-
-      await this.utils.showInfoAlert(result);
+      await ScanbotBarcodeSDK.cleanupStorage();
+      await this.utils.showInfoAlert('Successfully cleanup successfully!');
     } catch (error: any) {
       await this.utils.showErrorAlert(error);
     }

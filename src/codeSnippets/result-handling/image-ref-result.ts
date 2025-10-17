@@ -1,11 +1,11 @@
 import {
-  ScanbotBarcodeSDK,
   autorelease,
   BarcodeScannerScreenConfiguration,
   BarcodeScannerUiResult,
   DeepPartial,
   EncodeImageOptions,
   SaveImageOptions,
+  ScanbotBarcode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
@@ -16,7 +16,7 @@ async function handleScanningResultWithImageRef() {
 
   // Autorelease executes the given block and releases native resources
   await autorelease(async () => {
-    const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
+    const scanningResult = await ScanbotBarcode.startScanner(config);
     if (scanningResult.status == 'OK' && scanningResult.data) {
       for (const { barcode } of scanningResult.data.items) {
         // Check if sourceImage exists
@@ -49,7 +49,7 @@ async function handleScanningResultWithSerializedImageRef() {
   let serializedResult: DeepPartial<BarcodeScannerUiResult>;
 
   await autorelease(async () => {
-    const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
+    const scanningResult = await ScanbotBarcode.startScanner(config);
     if (scanningResult.status == 'OK' && scanningResult.data) {
       // Serialized the scanned result in order to move the data outside the autorelease block
       serializedResult = await scanningResult.data.serialize();
@@ -83,7 +83,7 @@ async function handleScanningResultWithEncodedImageRef() {
   config.scannerConfiguration.returnBarcodeImage = true;
 
   await autorelease(async () => {
-    const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
+    const scanningResult = await ScanbotBarcode.startScanner(config);
     if (scanningResult.status == 'OK' && scanningResult.data) {
       // Encode all ImageRefs as base64
       await scanningResult.data.encodeImages();

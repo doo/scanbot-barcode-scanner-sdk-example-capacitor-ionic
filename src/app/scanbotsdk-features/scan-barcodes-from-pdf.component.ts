@@ -1,44 +1,42 @@
 import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
-import { ImageUtils } from '../utils/image-utils';
 
 import {
-  BarcodeFormatCommonConfiguration,
   BarcodeFormatCode128Configuration,
+  BarcodeFormatCommonConfiguration,
   BarcodeScannerConfiguration,
-  ScanbotBarcodeSDK,
+  ScanbotBarcode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
+import { FileUtils } from '../utils/file-utils';
 
 @Component({
-  selector: 'app-detect-barcodes-on-image-feature',
+  selector: 'app-scan-barcodes-from-pdf',
   templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
-  imports: [IonItem, IonLabel, NgIf],
+  imports: [IonItem, IonLabel],
 })
-export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComponent {
+export class ScanBarcodesOnPdfFeatureComponent extends ScanbotSdkFeatureComponent {
+  override feature = {
+    id: FeatureId.ScanBarcodesFromPDF,
+    title: 'Import PDF & Scan Barcodes',
+  };
   private scanbotUtils = inject(ScanbotUtils);
-  private imageUtils = inject(ImageUtils);
+  private fileUtils = inject(FileUtils);
   private router = inject(Router);
 
-  override feature = {
-    id: FeatureId.DetectBarcodesOnImage,
-    title: 'Import Image & Detect Barcodes',
-  };
-
   override async featureClicked() {
-    // Always make sure you have a valid license on runtime via ScanbotBarcodeSDK.getLicenseInfo()
+    // Always make sure you have a valid license on runtime via ScanbotSDK.getLicenseInfo()
     if (!(await this.isLicenseValid())) {
       return;
     }
 
     try {
-      // Select image from library
-      const imageFileUri = await this.imageUtils.selectImageFromLibrary();
+      // Select a PDF from library
+      const pdf = await this.fileUtils.selectPdfFile();
 
       const scannerConfiguration = new BarcodeScannerConfiguration();
       scannerConfiguration.extractedDocumentFormats =
@@ -48,7 +46,7 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
       barcodeFormatCommonConfiguration.formats =
         await this.scanbotUtils.getAcceptedBarcodeFormats();
       barcodeFormatCommonConfiguration.stripCheckDigits = true;
-      barcodeFormatCommonConfiguration.minimumTextLength = 5;
+      barcodeFormatCommonConfiguration.minimumTextLength = 2;
 
       // Configure different parameters for specific barcode format.
       const barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
@@ -63,12 +61,10 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
 
       await this.utils.showLoader();
 
-      const result = await ScanbotBarcodeSDK.detectBarcodesOnImage({
-        imageFileUri: imageFileUri,
+      const result = await ScanbotBarcode.scanFromPdf({
+        pdfFileUri: pdf,
         configuration: scannerConfiguration,
       });
-
-      await this.utils.dismissLoader();
 
       if (result.success) {
         // Handle the detected barcode(s) from result
@@ -86,9 +82,9 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
         await this.utils.showInfoAlert('No barcodes detected');
       }
     } catch (error: any) {
-      await this.utils.dismissLoader();
-
       await this.utils.showErrorAlert(error);
+    } finally {
+      await this.utils.dismissLoader();
     }
   }
 }

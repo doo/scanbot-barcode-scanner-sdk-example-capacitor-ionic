@@ -28,7 +28,7 @@ export class ScanbotSdkFeatureComponent {
     try {
       const result = await ScanbotBarcodeSDK.getLicenseInfo();
 
-      if (result.isLicenseValid) {
+      if (result.isValid) {
         // We have a valid (trial) license and can call other Scanbot Barcode Scanner SDK methods.
         // E.g. launch the Barcode Scanner
         return true;

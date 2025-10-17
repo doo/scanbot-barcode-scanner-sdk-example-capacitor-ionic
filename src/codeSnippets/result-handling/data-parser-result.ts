@@ -1,34 +1,22 @@
 import {
-  ScanbotBarcodeSDK,
+  ScanbotBarcode,
   AAMVA,
-  AAMVADocumentType,
   BarcodeScannerScreenConfiguration,
   BoardingPass,
-  BoardingPassDocumentType,
   GS1,
-  GS1DocumentType,
   HIBC,
-  HIBCDocumentType,
   IDCardPDF417,
-  IDCardPDF417DocumentType,
   MedicalCertificate,
-  MedicalCertificateDocumentType,
   SEPA,
-  SEPADocumentType,
   SwissQR,
-  SwissQRDocumentType,
   VCard,
-  VCardDocumentType,
   BarcodeDocumentModelRootType,
-  DEMedicalPlanDocumentType,
   DEMedicalPlan,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 async function handleScanningResultWithDataParsers() {
   // Start the barcode RTU UI with default configuration
-  const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(
-    new BarcodeScannerScreenConfiguration(),
-  );
+  const scanningResult = await ScanbotBarcode.startScanner(new BarcodeScannerScreenConfiguration());
 
   // Check if the status returned is ok and that the data is present
   if (scanningResult.status == 'OK' && scanningResult.data) {
@@ -36,65 +24,67 @@ async function handleScanningResultWithDataParsers() {
     const requiredBarcodeInfo = scanningResult.data.items.map(({ barcode }) => {
       if (barcode.extractedDocument) {
         switch (barcode.extractedDocument.type.name as BarcodeDocumentModelRootType) {
-          case AAMVADocumentType:
+          case AAMVA.DOCUMENT_TYPE:
             const aamvaDocument = new AAMVA(barcode.extractedDocument);
             return {
               issuerID: aamvaDocument.issuerIdentificationNumber,
               driverLicense: aamvaDocument.driverLicense,
             };
-          case BoardingPassDocumentType:
+          case BoardingPass.DOCUMENT_TYPE:
             const boardingPassDocument = new BoardingPass(barcode.extractedDocument);
             return {
               name: boardingPassDocument.passengerName,
               securityData: boardingPassDocument.securityData,
             };
-          case GS1DocumentType:
+          case GS1.DOCUMENT_TYPE:
             const gs1DocumentType = new GS1(barcode.extractedDocument);
             return {
               elements: gs1DocumentType.elements,
             };
-          case IDCardPDF417DocumentType:
+          case IDCardPDF417.DOCUMENT_TYPE:
             const idCardPDF417Document = new IDCardPDF417(barcode.extractedDocument);
             return {
               firstName: idCardPDF417Document.firstName,
               documentCode: idCardPDF417Document.documentCode,
             };
-          case MedicalCertificateDocumentType:
+          case MedicalCertificate.DOCUMENT_TYPE:
             const medicalCertificateDocument = new MedicalCertificate(barcode.extractedDocument);
             return {
               firstName: medicalCertificateDocument.firstName,
               diagnosedOn: medicalCertificateDocument.diagnosedOn,
             };
-          case SEPADocumentType:
+          case SEPA.DOCUMENT_TYPE:
             const sepaDocument = new SEPA(barcode.extractedDocument);
             return {
               id: sepaDocument.identification,
               amount: sepaDocument.amount,
             };
-          case SwissQRDocumentType:
+          case SwissQR.DOCUMENT_TYPE:
             const swissQRDocument = new SwissQR(barcode.extractedDocument);
             return {
               name: swissQRDocument.payeeName,
               amount: swissQRDocument.amount,
             };
-          case VCardDocumentType:
+          case VCard.DOCUMENT_TYPE:
             const vCardDocument = new VCard(barcode.extractedDocument);
             return {
               name: vCardDocument.formattedName,
               number: vCardDocument.telephoneNumbers,
             };
-          case HIBCDocumentType:
+          case HIBC.DOCUMENT_TYPE:
             const hibcDocument = new HIBC(barcode.extractedDocument);
             return {
               dateOfManufacture: hibcDocument.dateOfManufacture,
               primaryData: hibcDocument.hasPrimaryData,
             };
-          case DEMedicalPlanDocumentType:
+          case DEMedicalPlan.DOCUMENT_TYPE:
             const deMedicalPlan = new DEMedicalPlan(barcode.extractedDocument);
             return {
               doctor: deMedicalPlan.doctor,
               patient: deMedicalPlan.patient,
             };
+          default:
+            return null;
         }
       } else {
         return {};

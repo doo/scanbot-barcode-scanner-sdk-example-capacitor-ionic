@@ -1,35 +1,34 @@
 import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
-  ScanbotBarcodeSDK,
+  BarcodeFormatCommonConfiguration,
+  BarcodeMappedData,
   BarcodeScannerScreenConfiguration,
   MultipleScanningMode,
-  BarcodeMappedData,
+  ScanbotBarcode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
   selector: 'app-rtu-multi-scanning-feature',
   templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
-  imports: [IonItem, IonLabel, NgIf],
+  imports: [IonItem, IonLabel],
 })
 export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent {
-  private scanbotUtils = inject(ScanbotUtils);
-  private router = inject(Router);
-
   override feature = {
     id: FeatureId.RtuMultiScanning,
     title: 'RTU UI Multi Scanning',
   };
+  private scanbotUtils = inject(ScanbotUtils);
+  private router = inject(Router);
 
   override async featureClicked() {
-    // Always make sure you have a valid license on runtime via ScanbotBarcodeSDK.getLicenseInfo()
+    // Always make sure you have a valid license on runtime via ScanbotSDK.getLicenseInfo()
     if (!(await this.isLicenseValid())) {
       return;
     }
@@ -39,22 +38,16 @@ export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent
 
     // Initialize the use case for multiple scanning.
     config.useCase = new MultipleScanningMode();
-
     // Set the counting mode.
     config.useCase.mode = 'COUNTING';
-
     // Set the sheet mode for the barcodes preview.
     config.useCase.sheet.mode = 'COLLAPSED_SHEET';
-
     // Set the height for the collapsed sheet.
     config.useCase.sheet.collapsedVisibleHeight = 'LARGE';
-
     // Enable manual count change.
     config.useCase.sheetContent.manualCountChangeEnabled = true;
-
     // Set the delay before same barcode counting repeat.
     config.useCase.countingRepeatDelay = 1000;
-
     // Configure the submit button.
     config.useCase.sheetContent.submitButton.text = 'Submit';
     config.useCase.sheetContent.submitButton.foreground.color = '#000000';
@@ -73,10 +66,7 @@ export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent
       // To show captured barcode image use BarcodeMappedData.barcodeImageKey
       // const image = BarcodeMappedData.barcodeImageKey;
 
-      /** Call onError() in case of error during obtaining mapped data. */
-      if (barcodeItem.text == 'Error occurred!') {
-        onError();
-      } else {
+      if (barcodeItem.format !== 'AZTEC') {
         onResult(
           new BarcodeMappedData({
             title: title,
@@ -84,27 +74,31 @@ export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent
             barcodeImage: image,
           }),
         );
+      } else {
+        // Invoke an error dialog based on some logic
+        onError();
       }
     };
 
     // Configure other parameters, pertaining to multiple-scanning mode as needed.
 
     // Set an array of accepted barcode types.
-    config.scannerConfiguration.barcodeFormats =
-      await this.scanbotUtils.getAcceptedBarcodeFormats();
+    config.scannerConfiguration.barcodeFormatConfigurations = [
+      new BarcodeFormatCommonConfiguration({
+        formats: await this.scanbotUtils.getAcceptedBarcodeFormats(),
+      }),
+    ];
+
     config.scannerConfiguration.extractedDocumentFormats =
       await this.scanbotUtils.getAcceptedBarcodeDocumentFormats();
 
     // Configure other parameters as needed.
 
     try {
-      const result = await ScanbotBarcodeSDK.startBarcodeScanner(config);
+      const result = await ScanbotBarcode.startScanner(config);
 
-      if (result.status === 'CANCELED') {
-        // User has canceled the scanning operation
-      } else if (result.data && result.data.items.length > 0) {
-        // Handle the scanned barcode from result
-
+      if (result.status === 'OK') {
+        // Handle the scanned barcode from the result
         // Get JSON parcelable barcode items
         const resultContainer = await Promise.all(
           result.data.items.map(async (item) => ({
@@ -114,8 +108,6 @@ export class RtuMultiScanningFeatureComponent extends ScanbotSdkFeatureComponent
         );
 
         await this.router.navigate(['/barcode-results', JSON.stringify(resultContainer)]);
-      } else {
-        await this.utils.showInfoAlert('No barcode scanned');
       }
     } catch (error: any) {
       await this.utils.showErrorAlert(error);

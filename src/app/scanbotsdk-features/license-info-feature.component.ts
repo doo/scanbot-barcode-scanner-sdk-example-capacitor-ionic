@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
 
 import { FeatureId } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
@@ -11,7 +10,7 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
   selector: 'app-license-info-feature',
   templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
-  imports: [IonItem, IonLabel, NgIf],
+  imports: [IonItem, IonLabel],
 })
 export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
@@ -23,19 +22,15 @@ export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
     try {
       const result = await ScanbotBarcodeSDK.getLicenseInfo();
 
-      const formattedText =
-        `• The license is ${result.isLicenseValid ? 'VALID' : 'NOT VALID'}` +
-        `<br />• Expiration Date:
-          ${
-            result.licenseExpirationDate
-              ? new Date(result.licenseExpirationDate).toDateString()
-              : 'N/A'
-          }` +
-        `<br />• Status: ${result.licenseStatus}`;
+      const formattedText = [
+        `• The license is ${result.isValid ? 'VALID' : 'NOT VALID'}`,
+        `• Expiration Date: ${result.expirationDateString}`,
+        `• Status: ${result.licenseStatusMessage}`,
+      ];
 
       await this.utils.showAlert({
         header: 'License',
-        message: formattedText,
+        message: formattedText.join('<br />'),
         buttons: ['OK'],
       });
     } catch (error: any) {
