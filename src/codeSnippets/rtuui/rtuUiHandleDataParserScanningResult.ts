@@ -45,7 +45,7 @@ async function handleScanningResultWithDataParsers() {
           case BoardingPassDocumentType:
             const boardingPassDocument = new BoardingPass(barcode.extractedDocument);
             return {
-              name: boardingPassDocument.name,
+              name: boardingPassDocument.passengerName,
               securityData: boardingPassDocument.securityData,
             };
           case GS1DocumentType:
@@ -80,8 +80,8 @@ async function handleScanningResultWithDataParsers() {
           case VCardDocumentType:
             const vCardDocument = new VCard(barcode.extractedDocument);
             return {
-              name: vCardDocument.firstName,
-              number: vCardDocument.telephoneNumber,
+              name: vCardDocument.formattedName,
+              number: vCardDocument.telephoneNumbers,
             };
           case HIBCDocumentType:
             const hibcDocument = new HIBC(barcode.extractedDocument);
