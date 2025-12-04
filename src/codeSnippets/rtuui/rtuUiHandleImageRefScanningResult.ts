@@ -13,12 +13,12 @@ async function handleScanningResultWithImageRef() {
   // Start the barcode RTU UI with a configuration that returns image results
   const config = new BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
-  const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 
   // Autorelease executes the given block and releases native resources
-  await autorelease(() => {
+  await autorelease(async () => {
+    const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
     if (scanningResult.status == 'OK' && scanningResult.data) {
-      scanningResult.data.items.forEach(async ({ barcode }) => {
+      for (const { barcode } of scanningResult.data.items) {
         // Check if sourceImage exists
         if (barcode.sourceImage) {
           // Saves the stored image at path with the given options
@@ -36,7 +36,7 @@ async function handleScanningResultWithImageRef() {
           // Releases the strong reference to the image manually
           barcode.sourceImage.release();
         }
-      });
+      }
     }
   });
 }
@@ -45,11 +45,11 @@ async function handleScanningResultWithSerializedImageRef() {
   // Start the barcode RTU UI with a configuration that returns image results
   const config = new BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
-  const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 
   let serializedResult: DeepPartial<BarcodeScannerUiResult>;
 
   await autorelease(async () => {
+    const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
     if (scanningResult.status == 'OK' && scanningResult.data) {
       // Serialized the scanned result in order to move the data outside the autorelease block
       serializedResult = await scanningResult.data.serialize();
@@ -57,10 +57,10 @@ async function handleScanningResultWithSerializedImageRef() {
   });
 
   // In another part of the app utilize the serialized result
-  await autorelease(() => {
+  await autorelease(async () => {
     const barcodeResult = new BarcodeScannerUiResult(serializedResult);
     // Continue working with ImageRefs
-    barcodeResult.items.forEach(async ({ barcode }) => {
+    for (const { barcode } of barcodeResult.items) {
       if (barcode.sourceImage) {
         // Saves the stored image at path with the given options
         const path = (
@@ -73,7 +73,7 @@ async function handleScanningResultWithSerializedImageRef() {
         // Returns the stored image as base64.
         const base64Image = await barcode.sourceImage.encodeImage(new EncodeImageOptions());
       }
-    });
+    }
   });
 }
 
@@ -81,9 +81,9 @@ async function handleScanningResultWithEncodedImageRef() {
   // Start the barcode RTU UI with a configuration that returns image results
   const config = new BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
-  const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
 
   await autorelease(async () => {
+    const scanningResult = await ScanbotBarcodeSDK.startBarcodeScanner(config);
     if (scanningResult.status == 'OK' && scanningResult.data) {
       // Encode all ImageRefs as base64
       await scanningResult.data.encodeImages();
