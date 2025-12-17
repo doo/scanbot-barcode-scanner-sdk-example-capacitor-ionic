@@ -19,11 +19,11 @@ import { RtuMultiScanningFeatureComponent } from '../scanbotsdk-features/rtu-mul
 import { RtuMultiArScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-ar-scanning-feature.component';
 import { RtuFindAndPickScanningFeatureComponent } from '../scanbotsdk-features/rtu-find-and-pick-scanning-feature.component';
 import { ScanBarcodesFromImageFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-image-feature.component';
+import { ScanBarcodesOnPdfFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-pdf.component';
 import { LicenseInfoFeatureComponent } from '../scanbotsdk-features/license-info-feature.component';
 import { StorageCleanupFeatureComponent } from '../scanbotsdk-features/storage-cleanup-feature.component';
 
 import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
-import { ScanBarcodesOnPdfFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-pdf.component';
 
 @Component({
   selector: 'app-home',
@@ -44,9 +44,9 @@ import { ScanBarcodesOnPdfFeatureComponent } from '../scanbotsdk-features/scan-b
     RtuMultiArScanningFeatureComponent,
     RtuFindAndPickScanningFeatureComponent,
     ScanBarcodesFromImageFeatureComponent,
+    ScanBarcodesOnPdfFeatureComponent,
     LicenseInfoFeatureComponent,
     StorageCleanupFeatureComponent,
-    ScanBarcodesOnPdfFeatureComponent,
   ],
 })
 export class HomePage {

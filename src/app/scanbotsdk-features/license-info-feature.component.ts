@@ -24,7 +24,7 @@ export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
 
       const formattedText = [
         `• The license is ${result.isValid ? 'VALID' : 'NOT VALID'}`,
-        `• Expiration Date: ${result.expirationDateString}`,
+        `• Expiration Date: ${new Date(result.expirationDateString).toDateString()}`,
         `• Status: ${result.licenseStatusMessage}`,
       ];
 

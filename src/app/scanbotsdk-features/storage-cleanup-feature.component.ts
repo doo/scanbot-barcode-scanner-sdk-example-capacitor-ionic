@@ -18,14 +18,14 @@ export class StorageCleanupFeatureComponent extends ScanbotSdkFeatureComponent {
   };
 
   override async featureClicked() {
-    // Always make sure you have a valid license on runtime via ScanbotSDK.getLicenseInfo()
+    // Always make sure you have a valid license on runtime via ScanbotBarcodeSDK.getLicenseInfo()
     if (!(await this.isLicenseValid())) {
       return;
     }
 
     try {
       await ScanbotBarcodeSDK.cleanupStorage();
-      await this.utils.showInfoAlert('Successfully cleanup successfully!');
+      await this.utils.showInfoAlert('Cleanup was successful!');
     } catch (error: any) {
       await this.utils.showErrorAlert(error);
     }

@@ -98,7 +98,7 @@ export class BarcodeResultsPage implements OnInit {
      * Fields from Generic Document could be managed in the following ways:
      *
      * 1. Extract all the fields from the Generic Document itself
-     * 2. Use the wrappers provided by ScanbotSDK and use the desired properties directly
+     * 2. Use the wrappers provided by ScanbotBarcodeSDK and use the desired properties directly
      *
      */
     const useWrappers = true;

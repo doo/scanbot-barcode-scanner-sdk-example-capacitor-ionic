@@ -1,6 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
 
 import { CommonUtils } from '../../utils/common-utils';
 import { Feature } from '../../utils/scanbot-utils';
@@ -11,7 +10,7 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
   selector: 'app-scanbotsdk-feature',
   templateUrl: './scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature.component.scss'],
-  imports: [IonItem, IonLabel, NgIf],
+  imports: [IonItem, IonLabel],
 })
 export class ScanbotSdkFeatureComponent {
   @Input() feature!: Feature;

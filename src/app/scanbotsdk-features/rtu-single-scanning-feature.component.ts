@@ -27,7 +27,7 @@ export class RtuSingleScanningFeatureComponent extends ScanbotSdkFeatureComponen
   private router = inject(Router);
 
   override async featureClicked() {
-    // Always make sure you have a valid license on runtime via ScanbotSDK.getLicenseInfo()
+    // Always make sure you have a valid license on runtime via ScanbotBarcodeSDK.getLicenseInfo()
     if (!(await this.isLicenseValid())) {
       return;
     }
