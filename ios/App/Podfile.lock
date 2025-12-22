@@ -9,9 +9,9 @@ PODS:
   - CapacitorFilesystem (8.0.0):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
-  - CapacitorPluginScanbotBarcodeScannerSdk (8.0.0-rc.1):
+  - CapacitorPluginScanbotBarcodeScannerSdk (8.0.0-rc.2):
     - Capacitor
-    - ScanbotBarcodeSDKWrapper (= 8.0.0.0)
+    - ScanbotBarcodeSDKWrapper (= 8.0.0.1)
   - CapacitorPreferences (8.0.0):
     - Capacitor
   - CapacitorStatusBar (8.0.0):
@@ -19,9 +19,9 @@ PODS:
   - CapawesomeCapacitorFilePicker (7.0.1):
     - Capacitor
   - IONFilesystemLib (1.0.1)
-  - ScanbotBarcodeScannerSDK (8.0.0-RC9)
-  - ScanbotBarcodeSDKWrapper (8.0.0.0):
-    - ScanbotBarcodeScannerSDK (= 8.0.0-RC9)
+  - ScanbotBarcodeScannerSDK (8.0.0-RC10)
+  - ScanbotBarcodeSDKWrapper (8.0.0.1):
+    - ScanbotBarcodeScannerSDK (= 8.0.0-RC10)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -61,19 +61,19 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capawesome/capacitor-file-picker"
 
 SPEC CHECKSUMS:
-  Capacitor: 79e40e5e76f852965dce30406c65253fa154e24a
-  CapacitorApp: cfa0120a1f3a6f69d4d37d3041782aa5c5167d0b
-  CapacitorCamera: 05ac5bd4499ed4b8cf5358d1b4a874b385de7b4d
+  Capacitor: 341ff7cf652ec695d1a8ebf604db448ac7b6d635
+  CapacitorApp: 3963a84197280757b84f126afd1520a85ae3b092
+  CapacitorCamera: 592acb7ab9fb748e2d8571eb03af30ec4e1ace12
   CapacitorCordova: 5dc3912d25ef770a3fe0f431bb65c9fbfa2e92f9
-  CapacitorFilesystem: 608bca984a5b6b2cba85a2972ea22974a37659d8
-  CapacitorPluginScanbotBarcodeScannerSdk: 16811a0766c91a87d537f19ba51aa3566d231765
-  CapacitorPreferences: 83f13cc19660ca9649a4769ec255be93f8c2ff68
-  CapacitorStatusBar: c6fa2d404083e41d145ea56698707a6986d4428b
-  CapawesomeCapacitorFilePicker: 6673764afb8768eba0197876e222adc19fd4c120
+  CapacitorFilesystem: 2cb7c29536024668f333266a2177f8c10bbd9c98
+  CapacitorPluginScanbotBarcodeScannerSdk: b3ff2a265e9b53e580d1251435f2fe2cdbe34ad1
+  CapacitorPreferences: 443fabe9670226200e595658a87ef0b1566716d4
+  CapacitorStatusBar: 312e2e67928dfe9514c4a8916a1fd610552f5f35
+  CapawesomeCapacitorFilePicker: 640114d8fd427375fe0e826ffc1ca54d91c2d611
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
-  ScanbotBarcodeScannerSDK: 86659d9e4891439930e09303e751f719271f9a89
-  ScanbotBarcodeSDKWrapper: 6d8f1c1d4071104d37109e555bf42aff3c2b2c4e
+  ScanbotBarcodeScannerSDK: 76b9b2c9bae12efa786d64183d7b2f3a1c702d58
+  ScanbotBarcodeSDKWrapper: 0f18c95827a48ff48156d70fe7507046c717cb8d
 
 PODFILE CHECKSUM: 31163f9970abc0558b4792385b8f0c651eb70e19
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
