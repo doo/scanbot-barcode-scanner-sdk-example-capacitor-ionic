@@ -9,9 +9,9 @@ PODS:
   - CapacitorFilesystem (8.0.0):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
-  - CapacitorPluginScanbotBarcodeScannerSdk (8.0.0-rc.3):
+  - CapacitorPluginScanbotBarcodeScannerSdk (8.0.0-rc.4):
     - Capacitor
-    - ScanbotBarcodeSDKWrapper (= 8.0.0.2)
+    - ScanbotBarcodeSDKNativeWrapper (= 8.0.1.0)
   - CapacitorPreferences (8.0.0):
     - Capacitor
   - CapacitorStatusBar (8.0.0):
@@ -19,9 +19,9 @@ PODS:
   - CapawesomeCapacitorFilePicker (7.0.1):
     - Capacitor
   - IONFilesystemLib (1.0.1)
-  - ScanbotBarcodeScannerSDK (8.0.0)
-  - ScanbotBarcodeSDKWrapper (8.0.0.2):
-    - ScanbotBarcodeScannerSDK (= 8.0.0)
+  - ScanbotBarcodeScannerSDK (8.0.1)
+  - ScanbotBarcodeSDKNativeWrapper (8.0.1.0):
+    - ScanbotBarcodeScannerSDK (= 8.0.1)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -38,7 +38,7 @@ SPEC REPOS:
   trunk:
     - IONFilesystemLib
     - ScanbotBarcodeScannerSDK
-    - ScanbotBarcodeSDKWrapper
+    - ScanbotBarcodeSDKNativeWrapper
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -66,13 +66,13 @@ SPEC CHECKSUMS:
   CapacitorCamera: 05ac5bd4499ed4b8cf5358d1b4a874b385de7b4d
   CapacitorCordova: 5dc3912d25ef770a3fe0f431bb65c9fbfa2e92f9
   CapacitorFilesystem: 608bca984a5b6b2cba85a2972ea22974a37659d8
-  CapacitorPluginScanbotBarcodeScannerSdk: 3d570d10e6532b9961cdbc5977cc4c452ac59e66
+  CapacitorPluginScanbotBarcodeScannerSdk: 557bef4dc2e7975e1f85fb16f32f7c42f4e1cf4e
   CapacitorPreferences: 83f13cc19660ca9649a4769ec255be93f8c2ff68
   CapacitorStatusBar: c6fa2d404083e41d145ea56698707a6986d4428b
   CapawesomeCapacitorFilePicker: 6673764afb8768eba0197876e222adc19fd4c120
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
-  ScanbotBarcodeScannerSDK: 1a75ff502f012b998301fce65201d6314e2479a1
-  ScanbotBarcodeSDKWrapper: 5cbd717692bedd6be226eb7fb1f61dd4a6b3ce2c
+  ScanbotBarcodeScannerSDK: c0270115558662cc6af89991d79f724848fd480f
+  ScanbotBarcodeSDKNativeWrapper: 0090b55ae79a0ff1c1a456db6db299e67648d657
 
 PODFILE CHECKSUM: 31163f9970abc0558b4792385b8f0c651eb70e19
 
