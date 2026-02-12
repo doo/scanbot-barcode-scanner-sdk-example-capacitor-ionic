@@ -9,7 +9,7 @@ PODS:
   - CapacitorFilesystem (8.0.0):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
-  - CapacitorPluginScanbotBarcodeScannerSdk (8.0.0-rc.4):
+  - CapacitorPluginScanbotBarcodeScannerSdk (8.0.0):
     - Capacitor
     - ScanbotBarcodeSDKNativeWrapper (= 8.0.1.0)
   - CapacitorPreferences (8.0.0):
@@ -66,7 +66,7 @@ SPEC CHECKSUMS:
   CapacitorCamera: 05ac5bd4499ed4b8cf5358d1b4a874b385de7b4d
   CapacitorCordova: 5dc3912d25ef770a3fe0f431bb65c9fbfa2e92f9
   CapacitorFilesystem: 608bca984a5b6b2cba85a2972ea22974a37659d8
-  CapacitorPluginScanbotBarcodeScannerSdk: 557bef4dc2e7975e1f85fb16f32f7c42f4e1cf4e
+  CapacitorPluginScanbotBarcodeScannerSdk: d4218cd1dac0cf1229260e6e9dd9ddba11b84422
   CapacitorPreferences: 83f13cc19660ca9649a4769ec255be93f8c2ff68
   CapacitorStatusBar: c6fa2d404083e41d145ea56698707a6986d4428b
   CapawesomeCapacitorFilePicker: 6673764afb8768eba0197876e222adc19fd4c120

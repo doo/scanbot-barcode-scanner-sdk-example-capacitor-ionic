@@ -36,7 +36,7 @@
     "@capacitor/status-bar": "^8.0.0",
     "@capawesome/capacitor-file-picker": "7.0.1",
     "@ionic/angular": "^8.0.0",
-    "capacitor-plugin-scanbot-barcode-scanner-sdk": "8.0.0-rc.4",
+    "capacitor-plugin-scanbot-barcode-scanner-sdk": "8.0.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
