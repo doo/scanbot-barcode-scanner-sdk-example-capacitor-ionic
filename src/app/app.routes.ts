@@ -6,14 +6,9 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
-    path: 'image-results/:imageUrls',
-    loadComponent: () =>
-      import('./results/image-results/image-results.page').then((m) => m.ImageResultsPage),
-  },
-  {
     path: 'barcode-results/:results',
     loadComponent: () =>
-      import('./results/barcode-results/barcode-results.page').then((m) => m.BarcodeResultsPage),
+      import('./barcode-results/barcode-results.page').then((m) => m.BarcodeResultsPage),
   },
   {
     path: 'barcode-formats',

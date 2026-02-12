@@ -3,13 +3,9 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { environment } from 'src/environments/environment';
-
 import { Colors } from 'src/theme/theme';
 
-import {
-  ScanbotBarcodeSDK,
-  ScanbotBarcodeSdkConfiguration,
-} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
+import { ScanbotBarcodeSDK, SdkConfiguration } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +13,7 @@ import {
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent implements OnInit {
+  public static readonly FILE_ENCRYPTION_ENABLED: boolean = false;
   /*
    * TODO add the license key here.
    * Please note: The Scanbot Barcode Scanner SDK will run without a license key for one minute per session!
@@ -27,7 +24,6 @@ export class AppComponent implements OnInit {
    * or of your app (see capacitor.config.ts).
    */
   private readonly licenseKey = '';
-
   /*
    * !! Please read note !!
    * It is strongly recommended to use the default (secure) storage location of the Scanbot Barcode Scanner SDK.
@@ -45,8 +41,6 @@ export class AppComponent implements OnInit {
     directory: Directory.External,
   });
 
-  public static readonly FILE_ENCRYPTION_ENABLED: boolean = false;
-
   constructor() {
     StatusBar.setStyle({ style: Style.Dark });
     StatusBar.setBackgroundColor({ color: Colors.scanbotRed });
@@ -58,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   private async initScanbotBarcodeScannerSdk() {
-    const config: ScanbotBarcodeSdkConfiguration = {
+    const config = new SdkConfiguration({
       licenseKey: this.licenseKey,
       loggingEnabled: !environment.production,
       // storageBaseDirectory: (await this.storageBaseDirectoryUri).uri, // Custom storage path
@@ -67,10 +61,10 @@ export class AppComponent implements OnInit {
         ? 'SomeSecretPa$$w0rdForFileEncryption'
         : undefined,
       // see further config parameters
-    };
+    });
 
     try {
-      const result = await ScanbotBarcodeSDK.initializeSdk(config);
+      const result = await ScanbotBarcodeSDK.initialize(config);
       console.log(result);
     } catch (error: any) {
       console.error(error);

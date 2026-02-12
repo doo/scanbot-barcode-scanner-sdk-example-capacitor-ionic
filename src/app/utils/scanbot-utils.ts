@@ -7,7 +7,7 @@ import {
   BarcodeFormat,
   Field,
   GenericDocument,
-  ScanbotBarcodeSDK,
+  ScanbotImageProcessor,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 export interface Feature {
@@ -21,8 +21,8 @@ export enum FeatureId {
   RtuMultiScanning,
   RtuMultiArScanning,
   RtuFindAndPickScanning,
-  DetectBarcodesOnImage,
-  ExtractImagesFromPdf,
+  ScanBarcodesFromImage,
+  ScanBarcodesFromPDF,
   LicenseInfo,
   StorageCleanup,
 }
@@ -226,9 +226,7 @@ export class ScanbotUtils {
   async decryptImageUrl(encryptedUrl: string): Promise<string> {
     let imageAsBase64 = '';
     try {
-      imageAsBase64 = await ScanbotBarcodeSDK.getImageData({
-        imageFileUri: encryptedUrl,
-      });
+      imageAsBase64 = await ScanbotImageProcessor.readImageData(encryptedUrl);
     } catch (error: any) {
       console.error(error.message);
     }

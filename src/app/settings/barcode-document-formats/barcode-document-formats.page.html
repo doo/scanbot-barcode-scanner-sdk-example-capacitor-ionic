@@ -18,13 +18,15 @@
         Enable Document Format Filters
       </ion-toggle>
     </ion-item>
-    <ion-item *ngFor="let document of documentSettings" [disabled]="!documentFormatsEnabled">
-      <ion-toggle
-        [checked]="document.accepted"
-        (ionChange)="documentSettingStateChanged($event, document)"
-      >
-        {{ document.format }}
-      </ion-toggle>
-    </ion-item>
+    @for (document of documentSettings; track document.format) {
+      <ion-item>
+        <ion-toggle
+          [checked]="document.accepted"
+          (ionChange)="documentSettingStateChanged($event, document)"
+        >
+          {{ document.format }}
+        </ion-toggle>
+      </ion-item>
+    }
   </ion-list>
 </ion-content>

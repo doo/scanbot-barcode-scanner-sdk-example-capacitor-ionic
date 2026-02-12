@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
@@ -8,27 +7,26 @@ import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feat
 import { ImageUtils } from '../utils/image-utils';
 
 import {
-  BarcodeFormatCommonConfiguration,
   BarcodeFormatCode128Configuration,
+  BarcodeFormatCommonConfiguration,
   BarcodeScannerConfiguration,
-  ScanbotBarcodeSDK,
+  ScanbotBarcode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
-  selector: 'app-detect-barcodes-on-image-feature',
+  selector: 'app-scan-barcodes-from-image-feature',
   templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
-  imports: [IonItem, IonLabel, NgIf],
+  imports: [IonItem, IonLabel],
 })
-export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComponent {
+export class ScanBarcodesFromImageFeatureComponent extends ScanbotSdkFeatureComponent {
+  override feature = {
+    id: FeatureId.ScanBarcodesFromImage,
+    title: 'Import Image & Scan Barcodes',
+  };
   private scanbotUtils = inject(ScanbotUtils);
   private imageUtils = inject(ImageUtils);
   private router = inject(Router);
-
-  override feature = {
-    id: FeatureId.DetectBarcodesOnImage,
-    title: 'Import Image & Detect Barcodes',
-  };
 
   override async featureClicked() {
     // Always make sure you have a valid license on runtime via ScanbotBarcodeSDK.getLicenseInfo()
@@ -63,8 +61,8 @@ export class DetectBarcodesOnImageFeatureComponent extends ScanbotSdkFeatureComp
 
       await this.utils.showLoader();
 
-      const result = await ScanbotBarcodeSDK.detectBarcodesOnImage({
-        imageFileUri: imageFileUri,
+      const result = await ScanbotBarcode.scanFromImage({
+        image: imageFileUri,
         configuration: scannerConfiguration,
       });
 

@@ -4,7 +4,7 @@ import {
   SingleScanningMode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
-function rtuUiMappingItemConfiguration() {
+function configureWithItemMapper() {
   // Create the default configuration object.
   const config = new BarcodeScannerScreenConfiguration();
 

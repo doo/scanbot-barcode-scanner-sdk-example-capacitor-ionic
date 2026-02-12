@@ -3,7 +3,7 @@ import {
   MultipleScanningMode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
-function rtuUiPreviewModeConfiguration() {
+function configurePreviewMode() {
   // Create the default configuration object.
   const config = new BarcodeScannerScreenConfiguration();
 
@@ -19,8 +19,6 @@ function rtuUiPreviewModeConfiguration() {
   // Configure the submit button on the sheet.
   config.useCase.sheetContent.submitButton.text = 'Submit';
   config.useCase.sheetContent.submitButton.foreground.color = '#000000';
-
-  // Configure other parameters, pertaining to multiple-scanning mode as needed.
 
   // Configure other parameters as needed.
 }

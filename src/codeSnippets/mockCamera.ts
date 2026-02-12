@@ -1,10 +1,6 @@
-import { MockCameraParams, ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
+import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 async function mockCamera() {
-  const config: MockCameraParams = {
-    imageFileUri: '{path to your image file}',
-  };
-
   try {
     /**
      * For Android:
@@ -12,7 +8,7 @@ async function mockCamera() {
      *  API < 33, READ_EXTERNAL_STORAGE permission is required.
      *  The image must have even values for both width and height.
      */
-    await ScanbotBarcodeSDK.mockCamera(config);
+    await ScanbotBarcodeSDK.mockCamera({ imageFileUri: '{path to your image file}' });
   } catch (error: any) {
     console.error(error);
   }

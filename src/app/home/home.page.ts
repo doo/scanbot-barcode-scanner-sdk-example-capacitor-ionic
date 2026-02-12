@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonList,
+  IonFooter,
+  IonHeader,
   IonItem,
   IonLabel,
-  IonFooter,
+  IonList,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
@@ -18,8 +18,8 @@ import { RtuSingleScanningWithImageResultsFeatureComponent } from '../scanbotsdk
 import { RtuMultiScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-scanning-feature.component';
 import { RtuMultiArScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-ar-scanning-feature.component';
 import { RtuFindAndPickScanningFeatureComponent } from '../scanbotsdk-features/rtu-find-and-pick-scanning-feature.component';
-import { DetectBarcodesOnImageFeatureComponent } from '../scanbotsdk-features/detect-barcodes-on-image-feature.component';
-import { ExtractImagesFromPdfFeatureComponent } from '../scanbotsdk-features/extract-images-from-pdf-feature.component';
+import { ScanBarcodesFromImageFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-image-feature.component';
+import { ScanBarcodesOnPdfFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-pdf.component';
 import { LicenseInfoFeatureComponent } from '../scanbotsdk-features/license-info-feature.component';
 import { StorageCleanupFeatureComponent } from '../scanbotsdk-features/storage-cleanup-feature.component';
 
@@ -43,17 +43,16 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
     RtuMultiScanningFeatureComponent,
     RtuMultiArScanningFeatureComponent,
     RtuFindAndPickScanningFeatureComponent,
-    DetectBarcodesOnImageFeatureComponent,
-    ExtractImagesFromPdfFeatureComponent,
+    ScanBarcodesFromImageFeatureComponent,
+    ScanBarcodesOnPdfFeatureComponent,
     LicenseInfoFeatureComponent,
     StorageCleanupFeatureComponent,
   ],
 })
 export class HomePage {
+  readonly currentYear = new Date().getFullYear();
   private utils = inject(CommonUtils);
   private router = inject(Router);
-
-  readonly currentYear = new Date().getFullYear();
 
   constructor() {}
 
@@ -73,7 +72,7 @@ export class HomePage {
     try {
       const result = await ScanbotBarcodeSDK.getLicenseInfo();
 
-      if (result.isLicenseValid) {
+      if (result.isValid) {
         // We have a valid (trial) license and can call other Scanbot Barcode Scanner SDK methods.
         // E.g. launch the Barcode Scanner
         return true;
