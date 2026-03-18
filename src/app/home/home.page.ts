@@ -17,6 +17,7 @@ import { RtuSingleScanningFeatureComponent } from '../scanbotsdk-features/rtu-si
 import { RtuSingleScanningWithImageResultsFeatureComponent } from '../scanbotsdk-features/rtu-single-scanning-with-image-results.component';
 import { RtuMultiScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-scanning-feature.component';
 import { RtuMultiArScanningFeatureComponent } from '../scanbotsdk-features/rtu-multi-ar-scanning-feature.component';
+import { RtuScanAndCountFeatureComponent } from '../scanbotsdk-features/rtu-scan-and-count-feature.component';
 import { RtuFindAndPickScanningFeatureComponent } from '../scanbotsdk-features/rtu-find-and-pick-scanning-feature.component';
 import { ScanBarcodesFromImageFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-image-feature.component';
 import { ScanBarcodesOnPdfFeatureComponent } from '../scanbotsdk-features/scan-barcodes-from-pdf.component';
@@ -37,7 +38,6 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
     IonList,
     IonItem,
     IonLabel,
-    IonFooter,
     RtuSingleScanningFeatureComponent,
     RtuSingleScanningWithImageResultsFeatureComponent,
     RtuMultiScanningFeatureComponent,
@@ -47,6 +47,7 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
     ScanBarcodesOnPdfFeatureComponent,
     LicenseInfoFeatureComponent,
     StorageCleanupFeatureComponent,
+    RtuScanAndCountFeatureComponent,
   ],
 })
 export class HomePage {

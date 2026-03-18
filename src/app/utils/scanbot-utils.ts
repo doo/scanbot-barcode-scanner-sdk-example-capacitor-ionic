@@ -20,6 +20,7 @@ export enum FeatureId {
   RtuSingleScanningWithImageResults,
   RtuMultiScanning,
   RtuMultiArScanning,
+  RtuScanAndCount,
   RtuFindAndPickScanning,
   ScanBarcodesFromImage,
   ScanBarcodesFromPDF,
