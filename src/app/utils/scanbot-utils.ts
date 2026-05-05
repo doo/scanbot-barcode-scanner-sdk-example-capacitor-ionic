@@ -11,21 +11,7 @@ import {
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 export interface Feature {
-  id: FeatureId;
   title: string;
-}
-
-export enum FeatureId {
-  RtuSingleScanning,
-  RtuSingleScanningWithImageResults,
-  RtuMultiScanning,
-  RtuMultiArScanning,
-  RtuScanAndCount,
-  RtuFindAndPickScanning,
-  ScanBarcodesFromImage,
-  ScanBarcodesFromPDF,
-  LicenseInfo,
-  StorageCleanup,
 }
 
 type SupportedBarcodeFormat = Exclude<BarcodeFormat, 'NONE'>;

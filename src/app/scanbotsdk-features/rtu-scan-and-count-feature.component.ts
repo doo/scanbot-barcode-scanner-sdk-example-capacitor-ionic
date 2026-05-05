@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
-import { FeatureId, ScanbotUtils } from '../utils/scanbot-utils';
+import { ScanbotUtils } from '../utils/scanbot-utils';
 import { Router } from '@angular/router';
 import {
   BarcodeFormatCommonConfiguration,
@@ -19,7 +19,6 @@ import {
 })
 export class RtuScanAndCountFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
-    id: FeatureId.RtuScanAndCount,
     title: 'RTU UI Scan And Count',
   };
   private scanbotUtils = inject(ScanbotUtils);

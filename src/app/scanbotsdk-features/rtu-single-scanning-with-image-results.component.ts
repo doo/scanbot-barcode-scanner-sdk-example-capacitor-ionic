@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
-import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
+import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
@@ -22,7 +22,6 @@ import {
 })
 export class RtuSingleScanningWithImageResultsFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
-    id: FeatureId.RtuSingleScanning,
     title: 'RTU UI Single Scanning With Image Results',
   };
   private scanbotUtils = inject(ScanbotUtils);

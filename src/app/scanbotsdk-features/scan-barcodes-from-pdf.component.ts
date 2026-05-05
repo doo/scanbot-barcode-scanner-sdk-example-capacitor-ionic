@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
-import { FeatureId, ScanbotUtils } from 'src/app/utils/scanbot-utils';
+import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import {
@@ -21,7 +21,6 @@ import { FileUtils } from '../utils/file-utils';
 })
 export class ScanBarcodesOnPdfFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
-    id: FeatureId.ScanBarcodesFromPDF,
     title: 'Import PDF & Scan Barcodes',
   };
   private scanbotUtils = inject(ScanbotUtils);
