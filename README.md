@@ -23,16 +23,16 @@ The plugin can be integrated into your app within minutes and comes with Ready-T
 
 ## Requirements
 
-* NodeJS 20+ & npm
-* [Capacitor CLI](https://www.npmjs.com/package/@capacitor/cli) 7+
+* NodeJS 22+ & npm
+* [Capacitor CLI](https://www.npmjs.com/package/@capacitor/cli) 8
 * For Android apps:
-	* Android Studio 2024.2.1+
-	* Android SDK (API Level 23+), Platforms and Developer Tools
-	* Android Gradle Plugin 8.4.0+ or Kotlin Plugin applied
+	* Android Studio 2025.2.1+
+	* Android SDK (API Level 24+), Platforms and Developer Tools
+	* Android Gradle Plugin 8.9.1+ or Kotlin Plugin applied
 
 * For iOS apps:
-	* iOS 14+
-	* macOS with Xcode 16+
+	* iOS 15+
+	* macOS with Xcode 26.0+
 	* Xcode Command Line Tools
 	* Homebrew
 	* Cocoapods
@@ -72,7 +72,7 @@ npm run ios
 
 You can read more about the Capacitor CLI commands at this [link](https://capacitorjs.com/docs/cli).
 
-If you want to develop without Capacitor CLI commands, you can use [VS Code](https://code.visualstudio.com/) together with the [Ionic VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ionic.ionic). Read more about this [here](https://capacitorjs.com/docs/vscode/getting-started).
+If you want to develop without Capacitor CLI commands, you can use [VS Code](https://code.visualstudio.com/) together with the [Ionic VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ionic.ionic). Read more about this [here](https://capacitorjs.com/docs/getting-started/vscode-extension).
 
 **Note:** Please make sure that you have configured the camera permissions accordingly.
 
@@ -134,12 +134,6 @@ Integrating the Scanbot Capacitor Barcode Scanner plugin into your Capacitor app
 💡 Our [Ionic Capacitor Barcode Scanner tutorial](https://scanbot.io/techblog/ionic-capacitor-barcode-scanner-tutorial/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) walks you through the integration process step by step. Follow along to implement a powerful barcode scanning feature quickly.
 
 Alternatively, check out our [developer blog](https://scanbot.io/techblog/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a collection of in-depth tutorials, use cases, and best practices.
-
-### Free integration support
-
-Need help integrating or testing our Barcode Scanner SDK? We offer [free developer support](https://docs.scanbot.io/support/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) via Slack, MS Teams, or email.
-
-As a customer, you also get access to a dedicated support Slack or Microsoft Teams channel to talk directly to your Customer Success Manager and our engineers.
 
 ### Licensing and pricing
 
