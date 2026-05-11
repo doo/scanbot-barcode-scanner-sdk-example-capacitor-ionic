@@ -28,7 +28,7 @@ The plugin can be integrated into your app within minutes and comes with Ready-T
 * For Android apps:
 	* Android Studio 2025.2.1+
 	* Android SDK (API Level 24+), Platforms and Developer Tools
-	* Android Gradle Plugin 8.9.1+ or Kotlin Plugin applied
+	* Android Gradle Plugin 8.9.1+
 
 * For iOS apps:
 	* iOS 15+
