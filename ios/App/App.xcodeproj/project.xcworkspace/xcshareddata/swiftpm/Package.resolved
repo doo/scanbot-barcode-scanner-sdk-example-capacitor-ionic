@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/doo/scanbot-barcode-sdk-native-wrapper-spm.git",
       "state" : {
-        "revision" : "154128ee2d357727fa820f3f6bf04f0a7e96db0e",
-        "version" : "9.0.2"
+        "revision" : "f8eaf3c7197956050360ad3a5ffbf877d9c53b38",
+        "version" : "9.0.3"
       }
     }
   ],
