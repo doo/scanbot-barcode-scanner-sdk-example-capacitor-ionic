@@ -19,6 +19,26 @@
     <app-rtu-find-and-pick-scanning-feature />
     <ion-item lines="none">
       <ion-label>
+        <h3>Classic Component UI</h3>
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="navigateClassic()" [detail]="false">
+      <ion-label>
+        <p>Classic component</p>
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="navigateClassicAlternate()" [detail]="false">
+      <ion-label>
+        <p>Classic component (overlay)</p>
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="navigateClassicUserMedia()" [detail]="false">
+      <ion-label>
+        <p>Classic component (user media)</p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
         <h3>BARCODE FORMATS</h3>
       </ion-label>
     </ion-item>

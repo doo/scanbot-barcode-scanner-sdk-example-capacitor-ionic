@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Barcode Classic Component</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="main-ion-content" [scrollY]="false" [fullscreen]="true">
+
+  <div id="barcode-view">
+    <div class="overlay-actions">
+      <ion-button class="overlay-action-button" fill="clear" (click)="onFinderToggle()" aria-label="Toggle Scanner">
+        <ion-icon name="barcode-outline"></ion-icon>
+      </ion-button>
+      <ion-button class="overlay-action-button" fill="clear" (click)="onCameraToggle()" aria-label="Camera">
+        <ion-icon name="camera-reverse-outline"></ion-icon>
+      </ion-button>
+      <ion-button class="overlay-action-button" fill="clear" (click)="onFlashLightToggle()" aria-label="Flashlight">
+        <ion-icon name="flashlight-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center" class="bottom-sheet-fab">
+    <ion-fab-button id="open-sheet-button" aria-label="Open results list">
+      <ion-icon name="list-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal
+    id="sheet"
+    trigger="open-sheet-button"
+    [backdropDismiss]="false"
+    [breakpoints]="[0, 0.25, 0.5, 1]"
+    [initialBreakpoint]="0.5"
+  >
+    <ng-template id="sheet-content">
+      <ion-content>
+        <div class="sheet-body">
+          <div id="sheet-header">
+            <ion-button class="sheet-action-button" fill="clear" (click)="onClearAll()">
+              Clear all
+            </ion-button>
+            <ion-label>{{ scanResults.length }} items</ion-label>
+            <ion-button class="sheet-action-button" fill="clear" (click)="onSubmit()">
+              Submit
+            </ion-button>
+          </div>
+          <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+          <ion-list class="results-list">
+            @for (result of scanResults; track $index) {
+              <ion-item>
+                <ion-label>
+                  <p><strong>Format:</strong> {{ result.format }}</p>
+                  <p><strong>Text:</strong> {{ result.text }}</p>
+                </ion-label>
+              </ion-item>
+            }
+          </ion-list>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

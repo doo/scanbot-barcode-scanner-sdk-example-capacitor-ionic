@@ -23,8 +23,27 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'barcode-classic',
+    loadComponent: () =>
+      import('./barcode-classic/barcode-classic.page').then((m) => m.BarcodeClassicPage),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'barcode-classic-alternate',
+    loadComponent: () =>
+      import('./barcode-classic-alternate/barcode-classic-alternate.page').then(
+        (m) => m.BarcodeClassicAlternatePage,
+      ),
+  },
+  {
+    path: 'barcode-classic-user-media',
+    loadComponent: () =>
+      import('./barcode-classic-user-media/barcode-classic-user-media.page').then(
+        (m) => m.BarcodeClassicUserMediaPage,
+      ),
   },
 ];
