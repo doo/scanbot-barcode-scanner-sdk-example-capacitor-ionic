@@ -1,27 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
-
-import { ScanbotUtils } from '../utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
-
+import { ScanbotUtils } from '../utils/scanbot-utils';
+import { Router } from '@angular/router';
 import {
   BarcodeFormatCommonConfiguration,
+  BarcodeMappedData,
   BarcodeScannerScreenConfiguration,
-  ExpectedBarcode,
-  FindAndPickScanningMode,
+  MultipleScanningMode,
   ScanbotBarcode,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
-  selector: 'app-rtu-find-and-pick-scanning-feature',
+  selector: 'app-rtu-scan-and-count-feature',
   templateUrl: './scanbotsdk-feature/scanbotsdk-feature.component.html',
   styleUrls: ['./scanbotsdk-feature/scanbotsdk-feature.component.scss'],
   imports: [IonItem, IonLabel],
 })
-export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureComponent {
+export class RtuScanAndCountFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
-    title: 'RTU UI Find And Pick Scanning',
+    title: 'RTU UI Scan And Count',
   };
   private scanbotUtils = inject(ScanbotUtils);
   private router = inject(Router);
@@ -35,18 +33,21 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
     // Create the default configuration object.
     const config = new BarcodeScannerScreenConfiguration();
 
-    // Initialize the use case for find and pick scanning.
-    config.useCase = new FindAndPickScanningMode();
+    // Initialize the use case for multiple scanning.
+    config.useCase = new MultipleScanningMode();
+
+    // Set the counting mode.
+    config.useCase.mode = 'COUNTING';
+
     // Set the sheet mode for the barcodes preview.
     config.useCase.sheet.mode = 'COLLAPSED_SHEET';
-    // Enable AR Overlay
-    config.useCase.arOverlay.visible = true;
-    // Enable/Disable the automatic selection.
-    config.useCase.arOverlay.automaticSelectionEnabled = false;
+
     // Set the height for the collapsed sheet.
     config.useCase.sheet.collapsedVisibleHeight = 'LARGE';
+
     // Enable manual count change.
     config.useCase.sheetContent.manualCountChangeEnabled = true;
+
     // Set the delay before same barcode counting repeat.
     config.useCase.countingRepeatDelay = 1000;
 
@@ -54,21 +55,33 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
     config.useCase.sheetContent.submitButton.text = 'Submit';
     config.useCase.sheetContent.submitButton.foreground.color = '#000000';
 
-    // Set the expected barcodes.
-    config.useCase.expectedBarcodes = [
-      new ExpectedBarcode({
-        barcodeValue: '123456',
-        title: 'numeric barcode',
-        count: 4,
-        image: 'https://avatars.githubusercontent.com/u/1454920',
-      }),
-      new ExpectedBarcode({
-        barcodeValue: 'SCANBOT',
-        title: 'value barcode',
-        count: 3,
-        image: 'https://avatars.githubusercontent.com/u/1454920',
-      }),
-    ];
+    // Implement mapping for the barcode item information
+    config.useCase.barcodeInfoMapping.barcodeItemMapper = (barcodeItem, onResult, onError) => {
+      /** TODO: process scan result as needed to get your mapped data,
+       * e.g. query your server to get product image, title and subtitle.
+       *
+       * Note: The built-in fetch API won't work properly in this case.
+       * To request from the server, please use XMLHttpRequest API or another 3rd party library such as axios.
+       *
+       * See example below.
+       */
+      const title = `Some product ${barcodeItem.text}`;
+      const subtitle = barcodeItem.format;
+
+      // If image from URL is used, on Android platform INTERNET permission is required.
+      const image = 'https://avatars.githubusercontent.com/u/1454920';
+      // To show captured barcode image use BarcodeMappedData.barcodeImageKey
+      // const image = BarcodeMappedData.barcodeImageKey;
+
+      /** Call onError() in case of error during obtaining mapped data. */
+      if (barcodeItem.text === 'Error occurred!') {
+        onError();
+      } else {
+        onResult(new BarcodeMappedData({ title: title, subtitle: subtitle, barcodeImage: image }));
+      }
+    };
+
+    // Configure other parameters, pertaining to multiple-scanning mode as needed.
 
     // Set an array of accepted barcode types.
     config.scannerConfiguration.barcodeFormatConfigurations = [
@@ -76,16 +89,15 @@ export class RtuFindAndPickScanningFeatureComponent extends ScanbotSdkFeatureCom
         formats: await this.scanbotUtils.getAcceptedBarcodeFormats(),
       }),
     ];
-
     config.scannerConfiguration.extractedDocumentFormats =
       await this.scanbotUtils.getAcceptedBarcodeDocumentFormats();
 
-    // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
+    // Configure other parameters as needed.
 
     try {
       const result = await ScanbotBarcode.startScanner(config);
 
-      if (result.status === 'OK') {
+      if (result.status === 'OK' && result.data) {
         // Handle the scanned barcode from the result
         // Get JSON parcelable barcode items
         const resultContainer = await Promise.all(

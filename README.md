@@ -23,16 +23,16 @@ The plugin can be integrated into your app within minutes and comes with Ready-T
 
 ## Requirements
 
-* NodeJS 20+ & npm
-* [Capacitor CLI](https://www.npmjs.com/package/@capacitor/cli) 7+
+* NodeJS 22+ & npm
+* [Capacitor CLI](https://www.npmjs.com/package/@capacitor/cli) 8
 * For Android apps:
-	* Android Studio 2024.2.1+
-	* Android SDK (API Level 23+), Platforms and Developer Tools
-	* Android Gradle Plugin 8.4.0+ or Kotlin Plugin applied
+	* Android Studio 2025.2.1+
+	* Android SDK (API Level 24+), Platforms and Developer Tools
+	* Android Gradle Plugin 8.9.1+
 
 * For iOS apps:
-	* iOS 14+
-	* macOS with Xcode 16+
+	* iOS 15+
+	* macOS with Xcode 26.0+
 	* Xcode Command Line Tools
 	* Homebrew
 	* Cocoapods
@@ -72,7 +72,7 @@ npm run ios
 
 You can read more about the Capacitor CLI commands at this [link](https://capacitorjs.com/docs/cli).
 
-If you want to develop without Capacitor CLI commands, you can use [VS Code](https://code.visualstudio.com/) together with the [Ionic VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ionic.ionic). Read more about this [here](https://capacitorjs.com/docs/vscode/getting-started).
+If you want to develop without Capacitor CLI commands, you can use [VS Code](https://code.visualstudio.com/) together with the [Ionic VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ionic.ionic). Read more about this [here](https://capacitorjs.com/docs/getting-started/vscode-extension).
 
 **Note:** Please make sure that you have configured the camera permissions accordingly.
 
@@ -117,13 +117,13 @@ The Scanbot Capacitor barcode scanner library supports all common 1D- or 2D barc
 | 2D Barcodes        | [QR Code](https://scanbot.io/glossary/qr-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Micro QR Code](https://scanbot.io/barcode-scanner-sdk/micro-qr-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Aztec Code](https://scanbot.io/barcode-scanner-sdk/aztec-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [PDF417 Code](https://scanbot.io/barcode-scanner-sdk/pdf417/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Data Matrix Code,](https://scanbot.io/barcode-scanner-sdk/data-matrix/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) [GiroCode](https://scanbot.io/glossary/giro-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [NTIN Code](https://scanbot.io/glossary/gtin/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [PPN](https://scanbot.io/glossary/ppn/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [UDI](https://scanbot.io/glossary/udi/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Royal Mail Mailmark](https://scanbot.io/barcode-scanner-sdk/royal-mail/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), MaxiCode |
 | Postal Symbologies | USPS Intelligent Mail (IMb), Royal Mail RM4SCC Barcode, Australia Post 4-State Customer Code, Japan Post 4-State Customer Code, KIX                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
-💡 Please visit our [docs](https://docs.scanbot.io/capacitor/barcode-scanner-sdk/supported-barcodes/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a complete overview of the supported barcode symbologies.
+💡 Please visit our [docs](https://docs.scanbot.io/capacitor/barcode-scanner-sdk/supported-barcode-symbologies/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a complete overview of the supported barcode symbologies.
 
 ### Data Parsers
 
 The Scanbot Barcode Scanner SDK supports a variety of data parsers that extract structured information from 2D barcodes such as QR Codes and Data Matrix. These include parsers for documents such as driving licences (AAMVA), boarding passes, medical certificates, SEPA forms, Swiss QR codes and vCard business cards. 
 
-💡 Please refer to our [documentation](https://docs.scanbot.io/capacitor/barcode-scanner-sdk/supported-barcodes/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites#supported-barcode-data-parsers) for a full list of supported data parsers.
+💡 Please refer to our [documentation](https://docs.scanbot.io/capacitor/barcode-scanner-sdk/supported-barcode-symbologies/#supported-barcode-data-parsers/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites#supported-barcode-data-parsers) for a full list of supported data parsers.
 
 ## Additional information
 
@@ -134,12 +134,6 @@ Integrating the Scanbot Capacitor Barcode Scanner plugin into your Capacitor app
 💡 Our [Ionic Capacitor Barcode Scanner tutorial](https://scanbot.io/techblog/ionic-capacitor-barcode-scanner-tutorial/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) walks you through the integration process step by step. Follow along to implement a powerful barcode scanning feature quickly.
 
 Alternatively, check out our [developer blog](https://scanbot.io/techblog/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a collection of in-depth tutorials, use cases, and best practices.
-
-### Free integration support
-
-Need help integrating or testing our Barcode Scanner SDK? We offer [free developer support](https://docs.scanbot.io/support/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) via Slack, MS Teams, or email.
-
-As a customer, you also get access to a dedicated support Slack or Microsoft Teams channel to talk directly to your Customer Success Manager and our engineers.
 
 ### Licensing and pricing
 

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-
-import { FeatureId } from 'src/app/utils/scanbot-utils';
 import { ScanbotSdkFeatureComponent } from './scanbotsdk-feature/scanbotsdk-feature.component';
 
 import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
@@ -14,7 +12,6 @@ import { ScanbotBarcodeSDK } from 'capacitor-plugin-scanbot-barcode-scanner-sdk'
 })
 export class LicenseInfoFeatureComponent extends ScanbotSdkFeatureComponent {
   override feature = {
-    id: FeatureId.LicenseInfo,
     title: 'View License Info',
   };
 
