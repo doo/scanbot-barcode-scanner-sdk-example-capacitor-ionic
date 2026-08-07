@@ -26,17 +26,11 @@ import {
 import {
   BarcodeCustomUIComponent,
   BarcodeItem,
-  CameraModule,
   ScannerViewFrame,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 import { Capacitor } from '@capacitor/core';
 import { addIcons } from 'ionicons';
-import {
-  barcodeOutline,
-  cameraReverseOutline,
-  flashlightOutline,
-  listOutline,
-} from 'ionicons/icons';
+import { barcodeOutline, copyOutline, flashlightOutline, listOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -74,42 +68,30 @@ export class BarcodeClassicPage implements OnInit, OnDestroy {
     height: 0,
   };
 
-  private cameraDevice: CameraModule = 'BACK';
+  private arOverlayEnabled = false;
   private flashEnabled = false;
   private finderEnabled = false;
 
   constructor(private ngZone: NgZone) {
-    addIcons({ cameraReverseOutline, flashlightOutline, listOutline, barcodeOutline });
+    addIcons({ copyOutline, flashlightOutline, listOutline, barcodeOutline });
 
     if (Capacitor.isPluginAvailable('ScanbotCustomUI')) {
       afterNextRender(() => {
-        this.barcodeCustomUIComponent.attachScannerAtFrame(
-          this.extractRect(),
-          {
-            onBarcodeScannerResult: (result) => {
-              this.ngZone.run(() => {
-                this.scanResults = result;
-              });
-            },
-            onBarcodeTap: (barcode) => {
-              this.ngZone.run(() => {
-                this.scanResults = [barcode];
-              });
-            },
-            onError: (error) => {
-              alert(`Error: ${error.message}`);
-            },
+        this.barcodeCustomUIComponent.attachScannerAtFrame(this.extractRect(), {
+          onBarcodeScannerResult: (result) => {
+            this.ngZone.run(() => {
+              this.scanResults = result;
+            });
           },
-          {
-            finderConfiguration: {
-              viewFinderEnabled: this.finderEnabled,
-              finderOverlayColor: '#00000094',
-            },
-            cameraConfiguration: {
-              cameraModule: this.cameraDevice,
-            },
+          onBarcodeTap: (barcode) => {
+            this.ngZone.run(() => {
+              this.scanResults = [barcode];
+            });
           },
-        );
+          onError: (error) => {
+            alert(`Error: ${error.message}`);
+          },
+        });
         this.currentPosition = this.extractRect();
       });
 
@@ -131,15 +113,16 @@ export class BarcodeClassicPage implements OnInit, OnDestroy {
 
   // Button methods
 
-  onCameraToggle() {
-    if (this.cameraDevice == 'BACK') {
-      this.cameraDevice = 'FRONT';
-    } else {
-      this.cameraDevice = 'BACK';
-    }
+  onArOverlayToggle() {
+    this.arOverlayEnabled = !this.arOverlayEnabled;
 
-    this.barcodeCustomUIComponent.configuration.setCameraConfiguration({
-      cameraModule: this.cameraDevice,
+    this.barcodeCustomUIComponent.configuration.setOverlayConfiguration({
+      overlayEnabled: this.arOverlayEnabled,
+      textFormat: 'CODE_AND_TYPE',
+      polygonColor: '#00CFA633',
+      textColor: '#000000',
+      textContainerColor: '#00CFA6CC',
+      strokeColor: '#00CFA6CC',
     });
   }
 
