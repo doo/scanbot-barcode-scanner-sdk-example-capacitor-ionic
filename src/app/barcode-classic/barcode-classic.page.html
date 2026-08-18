@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Barcode Classic Component</ion-title>
+    <ion-title>Barcode Custom UI Component</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="" defaultHref="/"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -21,17 +24,18 @@
   </div>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="center" class="bottom-sheet-fab">
-    <ion-fab-button id="open-sheet-button" aria-label="Open results list">
+    <ion-fab-button id="open-sheet-button" (click)="showResultModal(true)" aria-label="Open results list">
       <ion-icon name="list-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <ion-modal
     id="sheet"
-    trigger="open-sheet-button"
-    [backdropDismiss]="false"
+    [isOpen]="isResultModalOpen"
+    (didDismiss)="showResultModal(false)"
+    [backdropDismiss]="true"
     [breakpoints]="[0, 0.25, 0.5, 1]"
-    [initialBreakpoint]="0.5"
+    [initialBreakpoint]="0.25"
   >
     <ng-template id="sheet-content">
       <ion-content>

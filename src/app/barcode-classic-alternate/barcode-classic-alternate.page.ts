@@ -9,6 +9,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonItem,
@@ -46,6 +48,8 @@ import { Capacitor } from '@capacitor/core';
     IonItem,
     IonLabel,
     IonList,
+    IonBackButton,
+    IonButtons,
   ],
 })
 export class BarcodeClassicAlternatePage implements OnInit, OnDestroy {
@@ -63,6 +67,10 @@ export class BarcodeClassicAlternatePage implements OnInit, OnDestroy {
     addIcons({ cameraReverseOutline, flashlightOutline, listOutline, barcodeOutline });
 
     if (Capacitor.isPluginAvailable('ScanbotCustomUI')) {
+      /*
+       *  `afterNextRender` runs once after the next paint, so the component attaches when layout bounds are ready.
+       *  The app can attach via other lifecycle hooks or custom events if that timing fits better.
+       */
       afterNextRender(() => {
         this.barcodeCustomUIComponent.attachScannerAtFrame(this.extractRect(), {
           onBarcodeScannerResult: (result) => {
@@ -82,6 +90,10 @@ export class BarcodeClassicAlternatePage implements OnInit, OnDestroy {
         this.currentPosition = this.extractRect();
       });
 
+      /*
+       *  `afterEveryRender` runs after each paint, so the component can react to frame changes.
+       *  The app can update through resize observers, route events, or other mechanisms instead.
+       */
       afterEveryRender(() => {
         const current = this.extractRect();
         if (this.hasMoved(current, this.currentPosition)) {
@@ -99,7 +111,7 @@ export class BarcodeClassicAlternatePage implements OnInit, OnDestroy {
   }
 
   // Helpers
-
+  // Utility for extracting the div's frame
   private extractRect(): ScannerViewFrame {
     const div = document.getElementById('barcode-view');
     if (!div) {
