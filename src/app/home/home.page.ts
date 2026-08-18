@@ -76,10 +76,6 @@ export class HomePage {
     this.router.navigate(['/barcode-classic-alternate']);
   }
 
-  navigateClassicUserMedia() {
-    this.router.navigate(['/barcode-classic-user-media']);
-  }
-
   private async isLicenseValid(): Promise<boolean> {
     try {
       const result = await ScanbotBarcodeSDK.getLicenseInfo();

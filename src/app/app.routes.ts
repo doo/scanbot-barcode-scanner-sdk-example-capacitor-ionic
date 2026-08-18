@@ -39,11 +39,4 @@ export const routes: Routes = [
         (m) => m.BarcodeClassicAlternatePage,
       ),
   },
-  {
-    path: 'barcode-classic-user-media',
-    loadComponent: () =>
-      import('./barcode-classic-user-media/barcode-classic-user-media.page').then(
-        (m) => m.BarcodeClassicUserMediaPage,
-      ),
-  },
 ];
