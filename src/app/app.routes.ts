@@ -23,9 +23,9 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'barcode-classic',
+    path: 'barcode-custom-ui',
     loadComponent: () =>
-      import('./barcode-classic/barcode-classic.page').then((m) => m.BarcodeClassicPage),
+      import('./barcode-custom-ui/barcode-custom-ui.page').then((m) => m.BarcodeCustomUIPage),
   },
   {
     path: '',
@@ -33,10 +33,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'barcode-classic-alternate',
+    path: 'barcode-custom-ui-alternate',
     loadComponent: () =>
-      import('./barcode-classic-alternate/barcode-classic-alternate.page').then(
-        (m) => m.BarcodeClassicAlternatePage,
+      import('./barcode-custom-ui-alternate/barcode-custom-ui-alternate.page').then(
+        (m) => m.BarcodeCustomUiAlternatePage,
       ),
   },
 ];

@@ -34,9 +34,9 @@ import {
 import { Capacitor } from '@capacitor/core';
 
 @Component({
-  selector: 'app-barcode-classic-alternate',
-  templateUrl: './barcode-classic-alternate.page.html',
-  styleUrls: ['./barcode-classic-alternate.page.scss'],
+  selector: 'app-barcode-custom-ui-alternate',
+  templateUrl: './barcode-custom-ui-alternate.page.html',
+  styleUrls: ['./barcode-custom-ui-alternate.page.scss'],
   standalone: true,
   imports: [
     IonContent,
@@ -52,7 +52,7 @@ import { Capacitor } from '@capacitor/core';
     IonButtons,
   ],
 })
-export class BarcodeClassicAlternatePage implements OnInit, OnDestroy {
+export class BarcodeCustomUiAlternatePage implements OnInit, OnDestroy {
   scanResults: BarcodeItem[] = [];
   private barcodeCustomUIComponent = new BarcodeCustomUIComponent();
 

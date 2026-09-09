@@ -69,11 +69,11 @@ export class HomePage {
   }
 
   navigateClassic() {
-    this.router.navigate(['/barcode-classic']);
+    this.router.navigate(['/barcode-custom-ui']);
   }
 
   navigateClassicAlternate() {
-    this.router.navigate(['/barcode-classic-alternate']);
+    this.router.navigate(['/barcode-custom-ui-alternate']);
   }
 
   private async isLicenseValid(): Promise<boolean> {

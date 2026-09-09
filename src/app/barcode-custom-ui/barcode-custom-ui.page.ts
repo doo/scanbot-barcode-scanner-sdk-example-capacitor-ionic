@@ -36,9 +36,9 @@ import { barcodeOutline, copyOutline, flashlightOutline, listOutline } from 'ion
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-barcode-classic',
-  templateUrl: './barcode-classic.page.html',
-  styleUrls: ['./barcode-classic.page.scss'],
+  selector: 'app-barcode-custom-ui',
+  templateUrl: './barcode-custom-ui.page.html',
+  styleUrls: ['./barcode-custom-ui.page.scss'],
   standalone: true,
   imports: [
     IonContent,
@@ -59,12 +59,12 @@ import { Router } from '@angular/router';
     IonButtons,
   ],
 })
-export class BarcodeClassicPage implements OnInit, OnDestroy {
+export class BarcodeCustomUIPage implements OnInit, OnDestroy {
   scanResults: BarcodeItem[] = [];
 
   private router = inject(Router);
   private barcodeCustomUIComponent = new BarcodeCustomUIComponent();
-  isResultModalOpen = true;
+  isResultModalOpen = false;
 
   private currentPosition: ScannerViewFrame = {
     x: 0,
@@ -89,11 +89,13 @@ export class BarcodeClassicPage implements OnInit, OnDestroy {
         this.barcodeCustomUIComponent.attachScannerAtFrame(this.extractRect(), {
           onBarcodeScannerResult: (result) => {
             this.ngZone.run(() => {
+              this.showResultModal(true);
               this.scanResults = result;
             });
           },
           onBarcodeTap: (barcode) => {
             this.ngZone.run(() => {
+              this.showResultModal(true);
               this.scanResults = [barcode];
             });
           },
