@@ -1,11 +1,4 @@
-import {
-  afterEveryRender,
-  afterNextRender,
-  Component,
-  NgZone,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { afterEveryRender, Component, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -52,10 +45,10 @@ import { Capacitor } from '@capacitor/core';
     IonButtons,
   ],
 })
-export class BarcodeCustomUiAlternatePage implements OnInit, OnDestroy {
+export class BarcodeCustomUiAlternatePage {
   scanResults: BarcodeItem[] = [];
   private barcodeCustomUIComponent = new BarcodeCustomUIComponent();
-
+  private isAttached = false;
   private currentPosition: ScannerViewFrame = {
     x: 0,
     y: 0,
@@ -68,11 +61,26 @@ export class BarcodeCustomUiAlternatePage implements OnInit, OnDestroy {
 
     if (Capacitor.isPluginAvailable('ScanbotCustomUI')) {
       /*
-       *  `afterNextRender` runs once after the next paint, so the component attaches when layout bounds are ready.
-       *  The app can attach via other lifecycle hooks or custom events if that timing fits better.
+       *  `afterEveryRender` runs after each paint, so the component can react to frame changes.
+       *  The app can update through resize observers, route events, or other mechanisms instead.
        */
-      afterNextRender(() => {
-        this.barcodeCustomUIComponent.attachScannerAtFrame(this.extractRect(), {
+      afterEveryRender(() => {
+        if (this.isAttached) {
+          const current = this.extractRect();
+          if (this.hasMoved(current, this.currentPosition)) {
+            this.barcodeCustomUIComponent.updateScannerViewFrame(current);
+            this.currentPosition = current;
+          }
+        }
+      });
+    }
+  }
+
+  async ionViewDidEnter() {
+    if (Capacitor.isPluginAvailable('ScanbotCustomUI') && !this.isAttached) {
+      const currentPosition = this.extractRect();
+      this.barcodeCustomUIComponent
+        .attachScannerAtFrame(currentPosition, {
           onBarcodeScannerResult: (result) => {
             this.ngZone.run(() => {
               this.scanResults = result;
@@ -86,44 +94,32 @@ export class BarcodeCustomUiAlternatePage implements OnInit, OnDestroy {
           onError: (error) => {
             alert(`Error: ${error.message}`);
           },
+        })
+        .then(() => {
+          this.isAttached = true;
+          this.currentPosition = currentPosition;
         });
-        this.currentPosition = this.extractRect();
-      });
-
-      /*
-       *  `afterEveryRender` runs after each paint, so the component can react to frame changes.
-       *  The app can update through resize observers, route events, or other mechanisms instead.
-       */
-      afterEveryRender(() => {
-        const current = this.extractRect();
-        if (this.hasMoved(current, this.currentPosition)) {
-          this.barcodeCustomUIComponent.updateScannerViewFrame(current);
-          this.currentPosition = current;
-        }
-      });
     }
   }
 
-  ngOnInit() {}
-
-  ngOnDestroy() {
-    this.barcodeCustomUIComponent.detachScannerView();
+  async ionViewWillLeave() {
+    this.isAttached = false;
+    await this.barcodeCustomUIComponent.detachScannerView();
   }
 
   // Helpers
   // Utility for extracting the div's frame
   private extractRect(): ScannerViewFrame {
-    const div = document.getElementById('barcode-view');
+    const div = document.getElementById('barcode-view-alternate');
     if (!div) {
       return {
         x: 0,
         y: 0,
-        width: 0,
-        height: 0,
+        width: window.innerWidth,
+        height: window.innerHeight,
       };
     }
     const rect = div.getBoundingClientRect();
-
     return {
       x: rect.x,
       y: rect.y,
