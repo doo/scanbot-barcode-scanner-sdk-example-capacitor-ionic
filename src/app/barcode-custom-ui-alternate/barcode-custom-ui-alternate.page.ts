@@ -101,7 +101,6 @@ export class BarcodeCustomUiAlternatePage {
                 }),
               ],
               extractedDocumentFormats: await this.scanbotUtils.getAcceptedBarcodeDocumentFormats(),
-              onlyAcceptDocuments: true,
             }),
             overlayConfiguration: {
               overlayEnabled: true,

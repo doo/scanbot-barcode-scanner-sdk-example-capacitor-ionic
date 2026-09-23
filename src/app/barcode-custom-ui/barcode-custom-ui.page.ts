@@ -116,7 +116,6 @@ export class BarcodeCustomUIPage {
                 }),
               ],
               extractedDocumentFormats: await this.scanbotUtils.getAcceptedBarcodeDocumentFormats(),
-              onlyAcceptDocuments: true,
             }),
           },
         )
