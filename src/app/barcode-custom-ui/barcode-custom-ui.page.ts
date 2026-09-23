@@ -1,4 +1,4 @@
-import { afterEveryRender, afterNextRender, Component, inject, NgZone } from '@angular/core';
+import { afterEveryRender, Component, inject, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -16,16 +16,18 @@ import {
   IonModal,
   IonTitle,
   IonToolbar,
+  NavController,
 } from '@ionic/angular/standalone';
-import {
-  BarcodeCustomUIComponent,
-  BarcodeItem,
-  ScannerViewFrame,
-} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
-import { Capacitor } from '@capacitor/core';
 import { addIcons } from 'ionicons';
 import { barcodeOutline, copyOutline, flashlightOutline, listOutline } from 'ionicons/icons';
-import { Router } from '@angular/router';
+import { ScanbotUtils } from 'src/app/utils/scanbot-utils';
+import {
+  BarcodeCustomUIComponent,
+  BarcodeFormatCommonConfiguration,
+  BarcodeItem,
+  BarcodeScannerConfiguration,
+  ScannerViewFrame,
+} from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
 @Component({
   selector: 'app-barcode-custom-ui',
@@ -55,7 +57,9 @@ export class BarcodeCustomUIPage {
   scanResults: BarcodeItem[] = [];
   isResultModalOpen = false;
 
-  private router = inject(Router);
+  private navCtrl = inject(NavController);
+  private scanbotUtils = inject(ScanbotUtils);
+
   private barcodeCustomUIComponent = new BarcodeCustomUIComponent();
   private isAttached = false;
   private currentPosition: ScannerViewFrame = {
@@ -72,41 +76,56 @@ export class BarcodeCustomUIPage {
   constructor(private ngZone: NgZone) {
     addIcons({ copyOutline, flashlightOutline, listOutline, barcodeOutline });
 
-    if (Capacitor.isPluginAvailable('ScanbotCustomUI')) {
-      /*
-       *  `afterEveryRender` runs after each paint, so the component can react to frame changes.
-       *  The app can update through resize observers, route events, or other mechanisms instead.
-       */
-      afterEveryRender(() => {
-        if (this.isAttached) {
-          const current = this.extractRect();
-          if (this.hasMoved(current, this.currentPosition)) {
-            this.barcodeCustomUIComponent.updateScannerViewFrame(current);
-            this.currentPosition = current;
-          }
+    /*
+     *  `afterEveryRender` runs after each paint, so the component can react to frame changes.
+     *  The app can update through resize observers, route events, or other mechanisms instead.
+     */
+    afterEveryRender(() => {
+      if (this.isAttached) {
+        const current = this.extractRect();
+        if (this.hasMoved(current, this.currentPosition)) {
+          this.barcodeCustomUIComponent.updateScannerViewFrame(current);
+          this.currentPosition = current;
         }
-      });
-    }
+      }
+    });
   }
 
   async ionViewDidEnter() {
-    if (Capacitor.isPluginAvailable('ScanbotCustomUI') && !this.isAttached) {
+    if (!this.isAttached) {
       const currentPosition = this.extractRect();
       this.barcodeCustomUIComponent
-        .attachScannerAtFrame(currentPosition, {
-          onBarcodeScannerResult: (result) => {
-            this.ngZone.run(() => {
-              this.showResultModal(true);
-              this.scanResults = result;
-            });
+        .attachScannerAtFrame(
+          currentPosition,
+          {
+            onBarcodeScannerResult: (result) => {
+              this.ngZone.run(() => {
+                this.scanResults = result;
+                this.showResultModal(true);
+              });
+            }, // onBarcodeTap would not work in this screen because we have an overlay view on top of the scanner which consumes the tap events
+            onError: (error) => {
+              alert(`Error: ${error.message}`);
+            },
           },
-          onError: (error) => {
-            alert(`Error: ${error.message}`);
+          {
+            scannerConfiguration: new BarcodeScannerConfiguration({
+              barcodeFormatConfigurations: [
+                new BarcodeFormatCommonConfiguration({
+                  formats: await this.scanbotUtils.getAcceptedBarcodeFormats(),
+                }),
+              ],
+              extractedDocumentFormats: await this.scanbotUtils.getAcceptedBarcodeDocumentFormats(),
+              onlyAcceptDocuments: true,
+            }),
           },
-        })
+        )
         .then(() => {
           this.isAttached = true;
           this.currentPosition = this.extractRect();
+        })
+        .catch((error) => {
+          alert(`Error: ${error.message}`);
         });
     }
   }
@@ -151,8 +170,19 @@ export class BarcodeCustomUIPage {
     this.scanResults = [];
   }
 
-  onSubmit() {
-    this.router.navigate(['/home']);
+  async onSubmit() {
+    if (this.scanResults.length > 0) {
+      const resultContainer = await Promise.all(
+        this.scanResults.map(async (item) => ({
+          ...(await item.serialize()),
+          count: 1,
+        })),
+      );
+
+      await this.navCtrl.navigateForward(['/barcode-results', JSON.stringify(resultContainer)], {
+        replaceUrl: true,
+      });
+    }
   }
 
   showResultModal(show: boolean) {

@@ -5,7 +5,6 @@ import {
   BarcodeScannerConfiguration,
 } from 'capacitor-plugin-scanbot-barcode-scanner-sdk';
 
-
 function createAndAttachBarcodeScanner(element: HTMLElement) {
   const barcodeCustomUIComponent = new BarcodeCustomUIComponent();
 

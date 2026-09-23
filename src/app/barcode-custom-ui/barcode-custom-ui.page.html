@@ -8,23 +8,41 @@
 </ion-header>
 
 <ion-content class="main-ion-content" [scrollY]="false" [fullscreen]="true">
-
   <div id="barcode-view">
     <div class="overlay-actions">
-      <ion-button class="overlay-action-button" fill="clear" (click)="onFinderToggle()" aria-label="Toggle Scanner">
+      <ion-button
+        class="overlay-action-button"
+        fill="clear"
+        (click)="onFinderToggle()"
+        aria-label="Toggle Scanner"
+      >
         <ion-icon name="barcode-outline"></ion-icon>
       </ion-button>
-      <ion-button class="overlay-action-button" fill="clear" (click)="onArOverlayToggle()" aria-label="Overlay">
+      <ion-button
+        class="overlay-action-button"
+        fill="clear"
+        (click)="onArOverlayToggle()"
+        aria-label="Overlay"
+      >
         <ion-icon name="copy-outline"></ion-icon>
       </ion-button>
-      <ion-button class="overlay-action-button" fill="clear" (click)="onFlashLightToggle()" aria-label="Flashlight">
+      <ion-button
+        class="overlay-action-button"
+        fill="clear"
+        (click)="onFlashLightToggle()"
+        aria-label="Flashlight"
+      >
         <ion-icon name="flashlight-outline"></ion-icon>
       </ion-button>
     </div>
   </div>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="center" class="bottom-sheet-fab">
-    <ion-fab-button id="open-sheet-button" (click)="showResultModal(true)" aria-label="Open results list">
+    <ion-fab-button
+      id="open-sheet-button"
+      (click)="showResultModal(true)"
+      aria-label="Open results list"
+    >
       <ion-icon name="list-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -49,16 +67,16 @@
               Submit
             </ion-button>
           </div>
-          <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+          <hr class="sheet-divider" />
 
           <ion-list class="results-list">
             @for (result of scanResults; track $index) {
-              <ion-item>
-                <ion-label>
-                  <p><strong>Format:</strong> {{ result.format }}</p>
-                  <p><strong>Text:</strong> {{ result.text }}</p>
-                </ion-label>
-              </ion-item>
+            <ion-item>
+              <ion-label>
+                <p><strong>Format:</strong> {{ result.format }}</p>
+                <p><strong>Text:</strong> {{ result.text }}</p>
+              </ion-label>
+            </ion-item>
             }
           </ion-list>
         </div>

@@ -12,17 +12,24 @@
     <div id="barcode-view-alternate"></div>
     <section class="sheet-body">
       <div id="sheet-header">
-        <ion-label>{{ scanResults.length }} items</ion-label>
+        <ion-button class="sheet-action-button" fill="clear" (click)="onClear()">
+          Clear
+        </ion-button>
+        <ion-button class="sheet-action-button" fill="clear" (click)="onSubmit()">
+          Submit
+        </ion-button>
       </div>
+      <hr class="sheet-divider" />
+
       <div class="results-scroll">
         <ion-list class="results-list">
-          @for (result of scanResults; track $index) {
-            <ion-item>
-              <ion-label>
-                <p><strong>Format:</strong> {{ result.format }}</p>
-                <p><strong>Text:</strong> {{ result.text }}</p>
-              </ion-label>
-            </ion-item>
+          @for (result of selectedBarcodes; track $index) {
+          <ion-item>
+            <ion-label>
+              <p><strong>Format:</strong> {{ result.format }}</p>
+              <p><strong>Text:</strong> {{ result.text }}</p>
+            </ion-label>
+          </ion-item>
           }
         </ion-list>
       </div>

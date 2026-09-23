@@ -28,10 +28,25 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  flex: 0 0 auto;
   margin-top: 1.2em;
-  padding: 0.25rem 0.75rem 0.75rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 0.25rem 0.75rem 0;
+}
+
+.sheet-divider {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 2px;
+  margin: 0;
+  border: none;
+  background-color: gray;
+}
+
+.sheet-action-button {
+  --color: var(--ion-color-medium);
+}
+
+.sheet-action-button::part(native) {
+  text-transform: none;
 }
 
 .results-scroll {
