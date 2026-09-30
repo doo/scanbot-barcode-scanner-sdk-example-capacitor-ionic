@@ -8,23 +8,25 @@ async function imageRefReferenceSerialization(imageFileUri: string) {
      */
     const exampleRef = await ImageRef.fromImageFileUri(imageFileUri);
     if (exampleRef !== null) {
-      /*
-       * The `serialize()` method allows you to serialize the image reference.
-       * - Useful for storing the image reference in a format that can be easily transmitted or saved.
-       * - The serialized reference can be deserialized later to retrieve the original image reference.
-       */
-      const serializedRef = await exampleRef.serialize('REFERENCE');
-      /*
-       * The `uniqueId` property of the serialized reference contains a unique identifier for the image reference.
-       * This unique ID can be used to reference the image in future operations without needing to handle the actual image data directly.
-       */
-      console.log('Serialized Ref UUID', serializedRef?.uniqueId);
+      try {
+        /*
+         * The `serialize()` method allows you to serialize the image reference.
+         * - Useful for storing the image reference in a format that can be easily transmitted or saved.
+         * - The serialized reference can be deserialized later to retrieve the original image reference.
+         */
+        const serializedRef = await exampleRef.serialize('REFERENCE');
+        /*
+         * The `uniqueId` property of the serialized reference contains a unique identifier for the image reference.
+         * This unique ID can be used to reference the image in future operations without needing to handle the actual image data directly.
+         */
+        console.log('Serialized Ref UUID', serializedRef.uniqueId);
 
-      if (serializedRef !== null) {
         /*
          * The `ImageRef.from()` method allows you to create an image reference from the serialized data.
          */
         const ref = ImageRef.from(serializedRef);
+      } catch (error) {
+        console.error('Error during serialization or deserialization:', error);
       }
     }
   });
