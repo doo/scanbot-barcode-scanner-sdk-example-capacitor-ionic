@@ -103,7 +103,7 @@ export class BarcodeCustomUIPage {
                 this.scanResults = result;
                 this.showResultModal(true);
               });
-            }, // onBarcodeTap would not work in this screen because we have an overlay view on top of the scanner which consumes the tap events
+            },
             onError: (error) => {
               alert(`Error: ${error.message}`);
             },
