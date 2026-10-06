@@ -1,5 +1,5 @@
 {
-  "originHash" : "ed0527f563edf0b6751046872cc0b4d84d872ed9a8e10315b52730e2114e2727",
+  "originHash" : "f68ea744ae7e849c1c9a626a66d73849c3593d0d15c286a6985c43ec8cea1717",
   "pins" : [
     {
       "identity" : "capacitor-swift-pm",
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/doo/scanbot-barcode-sdk-native-wrapper-spm.git",
       "state" : {
-        "revision" : "bce0979573e16e917b70ce1dc905bc5ada9fde2f",
-        "version" : "10.0.1"
+        "revision" : "5ca7dc5459ed887c4039719ea2e3a385e2f4be0f",
+        "version" : "10.0.3"
       }
     }
   ],
