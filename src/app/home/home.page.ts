@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
   IonContent,
-  IonFooter,
   IonHeader,
   IonItem,
   IonLabel,
@@ -67,6 +66,14 @@ export class HomePage {
     if (await this.isLicenseValid()) {
       this.router.navigate(['/barcode-document-formats']);
     }
+  }
+
+  navigateClassic() {
+    this.router.navigate(['/barcode-custom-ui']);
+  }
+
+  navigateClassicAlternate() {
+    this.router.navigate(['/barcode-custom-ui-alternate']);
   }
 
   private async isLicenseValid(): Promise<boolean> {

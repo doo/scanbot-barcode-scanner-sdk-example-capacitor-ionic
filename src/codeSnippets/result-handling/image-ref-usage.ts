@@ -39,12 +39,16 @@ export async function imageRefUsage(imageFileUri: string) {
       const encodedBuffer = await ref.encodeImage(new EncodeImageOptions());
       console.log('Encoded buffer', encodedBuffer);
 
-      /*
-       * The `serialize()` method allows you to serialize the image reference.
-       * - Useful for storing the image reference in a format that can be easily transmitted or saved.
-       * - The serialized reference can be deserialized later to retrieve the original image reference.
-       */
-      const serializedRef = await ref.serialize('BUFFER');
+      try {
+        /*
+         * The `serialize()` method allows you to serialize the image reference.
+         * - Useful for storing the image reference in a format that can be easily transmitted or saved.
+         * - The serialized reference can be deserialized later to retrieve the original image reference.
+         */
+        const serializedRef = await ref.serialize('BUFFER');
+      } catch (error) {
+        console.error('Error during serialization:', error);
+      }
     }
   });
 }

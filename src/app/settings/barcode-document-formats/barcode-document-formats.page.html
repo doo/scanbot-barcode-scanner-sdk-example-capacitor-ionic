@@ -22,6 +22,7 @@
     <ion-item>
       <ion-toggle
         [checked]="document.accepted"
+        [disabled]="!documentFormatsEnabled"
         (ionChange)="documentSettingStateChanged($event, document)"
       >
         {{ document.format }}

@@ -23,8 +23,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'barcode-custom-ui',
+    loadComponent: () =>
+      import('./barcode-custom-ui/barcode-custom-ui.page').then((m) => m.BarcodeCustomUIPage),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'barcode-custom-ui-alternate',
+    loadComponent: () =>
+      import('./barcode-custom-ui-alternate/barcode-custom-ui-alternate.page').then(
+        (m) => m.BarcodeCustomUiAlternatePage,
+      ),
   },
 ];
